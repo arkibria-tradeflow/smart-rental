@@ -1,16 +1,16 @@
 /* Premium 2026 responsive homepage — white-label presentation layer.
    Existing booking, enquiry and owner demo workflows remain in app.js. */
 (function(){
-  const heroPhoto='https://images.unsplash.com/photo-1773417889450-220602f31b42?auto=format&fit=crop&w=1500&q=82';
+  const heroPhoto='https://images.unsplash.com/photo-1674433485952-af5cb22e2602?auto=format&fit=crop&w=1500&q=86';
   const categoryPhotos={
-    Economy:'https://images.unsplash.com/photo-1596429916858-6f97b5b9cf48?auto=format&fit=crop&w=650&q=78',
+    Economy:'https://images.unsplash.com/photo-1749058983925-0cb49aec5d9f?auto=format&fit=crop&w=650&q=80',
     Sedan:'https://images.unsplash.com/photo-1578245601540-19edcdc12e7f?auto=format&fit=crop&w=650&q=78',
     SUV:'https://images.unsplash.com/photo-1767274592417-c986b7619c8c?auto=format&fit=crop&w=650&q=78',
     Luxury:'https://images.unsplash.com/photo-1556161189-78e416f7e934?auto=format&fit=crop&w=650&q=78',
     Sports:'https://images.unsplash.com/photo-1778959686627-4b77ad253447?auto=format&fit=crop&w=650&q=78'
   };
   header=function(){
-    return (CFG.showDemoBanner?'<div class="demo-banner">INTERACTIVE PREVIEW · SAMPLE INVENTORY · NO LIVE BOOKINGS</div>':'')
+    return ''
       +'<header class="site-header"><div class="container header-inner">'
       +brand()
       +'<nav class="desktop-nav" aria-label="Main navigation"><a href="#home" class="'+(ui.page==='home'?'on':'')+'">Home</a><a href="#fleet" class="'+(ui.page==='fleet'?'on':'')+'">Explore Cars</a><a href="#my-rental" class="'+(ui.page==='my-rental'?'on':'')+'">My Rental</a><a href="#about" class="'+(ui.page==='about'?'on':'')+'">About</a><a href="#about">Contact</a></nav>'
@@ -36,42 +36,95 @@
       ['Luxury','Luxury',categoryPhotos.Luxury],
       ['Sports','Supercars',categoryPhotos.Sports]
     ];
+    const brands=[
+      ['Toyota','toyota'],['Hyundai','hyundai'],['Nissan','nissan'],['Lexus','lexus'],
+      ['BMW','bmw'],['Mercedes','mercedesbenz'],['Audi','audi'],['Land Rover','landrover']
+    ];
     const categoryMarkup=categories.map(function(c){
-      return '<button class="premium-category" type="button" data-action="category" data-category="'+c[0]+'" aria-label="Browse '+c[1]+' rentals">'
-       +'<span class="premium-category-photo"><img src="'+c[2]+'" loading="lazy" alt="Illustrative '+c[1]+' vehicle" onerror="this.style.visibility=\'hidden\'"></span>'
-       +'<span class="premium-category-title">'+c[1]+'</span><span class="premium-category-sub">Explore vehicles</span>'
-       +'<span class="premium-category-arrow">'+icon('arrow',17)+'</span></button>';
+      return '<button class="premium-category" type="button" data-action="category" data-category="'+c[0]+'" aria-label="Browse '+c[1]+' cars">'
+        +'<span class="premium-category-photo"><img src="'+c[2]+'" loading="lazy" alt="'+c[1]+' car" onerror="this.style.display=\'none\'"></span>'
+        +'<span class="premium-category-title">'+c[1]+'</span><span class="premium-category-sub">Explore cars</span>'
+        +'<span class="premium-category-arrow">'+icon('arrow',17)+'</span></button>';
     }).join('');
+    const brandMarkup=brands.map(function(b){
+      return '<button type="button" class="lux-brand-card" data-brand-filter="'+esc(b[0])+'" aria-label="Explore '+esc(b[0])+' cars">'
+        +'<span class="lux-brand-symbol"><img src="https://cdn.simpleicons.org/'+b[1]+'/7a808b" loading="lazy" alt="" onerror="this.style.display=\'none\'"></span>'
+        +'<span class="lux-brand-name">'+esc(b[0])+'</span>'+icon('arrow',14)+'</button>';
+    }).join('');
+    const googleUrl=CFG.googleMapsUrl||'https://www.google.com/maps/search/?api=1&query=Wadi%20Salsabeel%20Rent%20A%20Car%20LLC';
+    const rating=CFG.googleRating||'4.4',count=CFG.googleReviewCount||13;
+    const phone=CFG.phoneNumber||'971566829999';
+    const address=CFG.address||'Afra Plaza, Al Corniche, Deira, Dubai';
     return '<main class="premium-home">'
       +'<section class="premium-hero"><div class="container premium-hero-inner">'
-      +'<div class="premium-hero-copy"><div class="premium-kicker">PREMIUM CAR RENTAL IN DUBAI</div>'
+      +'<div class="premium-hero-copy"><div class="premium-kicker">YOUR DRIVE, YOUR WAY · DUBAI</div>'
       +'<h1>Drive Your<br><em>Next Journey</em></h1>'
-      +'<p>Explore the right car for every occasion. Flexible rental options, a curated selection and an easier way to enquire.</p>'
-      +'<button class="premium-hero-link" type="button" data-action="browse">Explore our fleet '+icon('arrow',19)+'</button></div>'
+      +'<p>From everyday essentials to exceptional drives. Discover a vehicle that suits your journey.</p>'
+      +'<button class="premium-hero-link" type="button" data-action="browse">Explore our cars '+icon('arrow',19)+'</button></div>'
       +'<div class="premium-hero-media"><div class="premium-hero-halo"></div>'
-      +'<img class="premium-hero-photo" src="'+heroPhoto+'" alt="Illustrative white Range Rover in an upscale setting; vehicle photo is not company inventory" loading="eager" fetchpriority="high" onerror="this.src=CFG.heroImage">'
-      +'<span class="premium-hero-caption">ILLUSTRATIVE VEHICLE PHOTO</span></div>'
-      +'<div class="premium-hero-benefits"><span>'+icon('car',23)+'<b>Wide selection</b></span><span>'+icon('shield',23)+'<b>Flexible rentals</b></span><span>'+icon('message',23)+'<b>Personal assistance</b></span></div>'
+      +'<img class="premium-hero-photo" src="'+heroPhoto+'" alt="White Range Rover at an elegant architectural setting" loading="eager" fetchpriority="high" onerror="this.src=CFG.heroImage">'
+      +'</div><div class="premium-hero-benefits"><span>'+icon('car',23)+'<b>Cars for every journey</b></span><span>'+icon('shield',23)+'<b>Flexible rental options</b></span><span>'+icon('message',23)+'<b>Talk to our team</b></span></div>'
       +'</div></section>'
       +'<div class="container premium-search-wrap">'+searchFields()+'</div>'
-      +'<div class="container premium-brand-strip"><span class="premium-brand-intro">EXPLORE BY BRAND</span><div class="premium-brand-logos">'
-      +['TOYOTA','HYUNDAI','NISSAN','LEXUS','BMW','MERCEDES','AUDI','RANGE ROVER'].map(function(b){return '<span>'+b+'</span>';}).join('')
-      +'</div><a href="#fleet" aria-label="See all car brands">'+icon('arrow',18)+'</a></div>'
-      +'<section class="premium-categories-section"><div class="container"><div class="premium-section-heading">'
-      +'<div><span class="premium-kicker">EXPLORE BY CATEGORY</span><h2>Find the <em>perfect car.</em></h2><p>From everyday comfort to exceptional experiences.</p></div>'
+      +'<section class="premium-categories-section" id="categories"><div class="container"><div class="premium-section-heading">'
+      +'<div><span class="premium-kicker">THE COLLECTION</span><h2>Explore by <em>category.</em></h2><p>Everyday drives, family comfort and something extraordinary.</p></div>'
       +'<a class="premium-view-all" href="#fleet">View all cars '+icon('arrow',17)+'</a></div>'
       +'<div class="premium-category-grid">'+categoryMarkup+'</div></div></section>'
-      +'<section class="premium-how"><div class="container"><div class="premium-section-heading"><div><span class="premium-kicker">A BETTER WAY TO RENT</span><h2>Simple from start to finish.</h2></div></div>'
-      +'<div class="premium-how-grid"><div><b>01</b><h3>Find a car</h3><p>Browse by category, brand or indicative price.</p></div><div><b>02</b><h3>Select your dates</h3><p>Share the rental period and pickup preference.</p></div><div><b>03</b><h3>Request a quote</h3><p>Our team confirms availability and rental terms.</p></div></div></div></section>'
-      +'<div class="premium-demo-disclaimer container">Interactive demonstration only. Car photographs are illustrative; sample catalogue rates and inventory are not verified live offers. No real bookings are placed.</div>'
+      +'<section class="lux-brand-section" id="brands"><div class="container"><div class="premium-section-heading">'
+      +'<div><span class="premium-kicker">FIND YOUR FAVOURITE</span><h2>Explore by <em>brand.</em></h2><p>Choose the marque that fits your next drive.</p></div>'
+      +'<a class="premium-view-all" href="#fleet">Browse our fleet '+icon('arrow',17)+'</a></div>'
+      +'<div class="lux-brand-grid">'+brandMarkup+'</div></div></section>'
+      +'<section class="lux-reviews-section" id="reviews"><div class="container lux-reviews-layout">'
+      +'<div class="lux-reviews-copy"><span class="premium-kicker">CUSTOMER FEEDBACK</span><h2>Trusted journeys.<br><em>Real experiences.</em></h2>'
+      +'<p>See what customers are saying about their experience with Wadi Salsabeel Rent A Car on Google.</p>'
+      +'<a href="'+googleUrl+'" target="_blank" rel="noopener noreferrer" class="lux-text-link">Read Google reviews '+icon('arrow',17)+'</a></div>'
+      +'<div class="lux-rating-card"><div class="lux-google-wordmark"><span class="lux-g">G</span><span>Google Reviews</span></div>'
+      +'<div class="lux-rating-number">'+rating+'<span>/ 5</span></div>'
+      +'<div class="lux-stars" aria-label="Rated '+rating+' out of 5">★★★★<span>★</span></div>'
+      +'<div class="lux-rating-count">Based on '+count+' public Google reviews</div>'
+      +'<a href="'+googleUrl+'" target="_blank" rel="noopener noreferrer">View customer reviews '+icon('arrow',15)+'</a></div>'
+      +'</div></section>'
+      +'<section class="lux-location-section" id="visit"><div class="container"><div class="premium-section-heading">'
+      +'<div><span class="premium-kicker">FIND US IN DUBAI</span><h2>Visit our <em>showroom.</em></h2><p>We are conveniently located in Deira, Dubai.</p></div></div>'
+      +'<div class="lux-location-grid"><div class="lux-location-card">'
+      +'<span class="lux-location-icon">'+icon('pin',24)+'</span><h3>Wadi Salsabeel Rent A Car</h3><p>'+esc(address)+'</p>'
+      +'<div class="lux-location-actions"><a class="lux-dark-btn" href="'+googleUrl+'" target="_blank" rel="noopener noreferrer">'+icon('pin',18)+' Get directions</a>'
+      +'<a class="lux-call-btn" href="tel:+'+phone+'">'+icon('phone',17)+' Call us</a></div>'
+      +'<div class="lux-location-bottom"><span>Deira · Dubai · UAE</span><span>'+esc(CFG.phoneDisplay||'+971 56 682 9999')+'</span></div>'
+      +'</div><div class="lux-map-container"><iframe title="Location of Wadi Salsabeel Rent A Car in Deira, Dubai" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Wadi%20Salsabeel%20Rent%20A%20Car%20LLC%2C%20Afra%20Plaza%2C%20Deira%2C%20Dubai&output=embed"></iframe></div></div>'
+      +'</div></section>'
       +'</main>';
   };
+  footer=function(){
+    const mapsUrl=CFG.googleMapsUrl||'https://www.google.com/maps/search/?api=1&query=Wadi%20Salsabeel%20Rent%20A%20Car%20LLC';
+    const phone=String(CFG.phoneNumber||'971566829999').replace(/\D/g,'');
+    const whatsapp=String(CFG.whatsappNumber||phone).replace(/\D/g,'');
+    return '<footer class="footer lux-footer"><div class="container lux-footer-top">'
+      +'<div class="lux-footer-identity"><a href="#home" aria-label="Back to homepage" class="lux-footer-logo"><img src="'+esc(CFG.logoPath)+'" alt="'+esc(CFG.businessName)+'"></a>'
+      +'<p>Discover the right car for every occasion. From city drives to extraordinary experiences in Dubai.</p>'
+      +'<div class="lux-footer-social"><a href="https://wa.me/'+whatsapp+'" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">'+icon('message',19)+'</a>'
+      +'<a href="'+mapsUrl+'" target="_blank" rel="noopener noreferrer" aria-label="Find us on Google Maps">'+icon('pin',19)+'</a></div></div>'
+      +'<div class="lux-footer-col"><h3>Discover</h3><a href="#home">Home</a><a href="#fleet">Explore Cars</a><a href="#my-rental">My Rental</a><a href="#about">About Us</a></div>'
+      +'<div class="lux-footer-col"><h3>Explore</h3><a href="#fleet" data-footer-category="Economy">Economy Cars</a><a href="#fleet" data-footer-category="Sedan">Sedans</a>'
+      +'<a href="#fleet" data-footer-category="SUV">SUVs</a><a href="#fleet" data-footer-category="Luxury">Luxury Cars</a></div>'
+      +'<div class="lux-footer-col lux-footer-contact"><h3>Visit & Contact</h3><span>'+icon('pin',16)+' '+esc(CFG.address)+'</span>'
+      +'<a href="tel:+'+phone+'">'+icon('phone',16)+' '+esc(CFG.phoneDisplay||'+971 56 682 9999')+'</a>'
+      +'<a href="'+mapsUrl+'" target="_blank" rel="noopener noreferrer">'+icon('arrow',16)+' View on Google Maps</a></div>'
+      +'</div><div class="container lux-footer-bottom"><span>© '+new Date().getFullYear()+' '+esc(CFG.businessName)+'. All rights reserved.</span>'
+      +'<span>Made for effortless journeys in Dubai.</span></div></footer>';
+  };
+  document.addEventListener('click',function(e){
+    const brand=e.target.closest('[data-brand-filter]');
+    if(brand){e.preventDefault();ui.category='All';ui.search=brand.dataset.brandFilter||'';navigate('fleet');return;}
+    const cat=e.target.closest('[data-footer-category]');
+    if(cat){e.preventDefault();ui.search='';ui.category=cat.dataset.footerCategory;navigate('fleet');}
+  });
   bottomNav=function(){
     return '<nav class="bottom-nav" aria-label="Mobile navigation">'
       +'<a href="#home" class="'+(ui.page==='home'?'active':'')+'">'+icon('grid',21)+'<span>Home</span></a>'
       +'<a href="#fleet" class="'+(['fleet','detail','booking'].includes(ui.page)?'active':'')+'">'+icon('car',21)+'<span>Explore</span></a>'
       +'<a href="#my-rental" class="'+(ui.page==='my-rental'?'active':'')+'">'+icon('calendar',21)+'<span>My Rental</span></a>'
-      +'<a href="#owner" class="'+(ui.page==='owner'?'active':'')+'">'+icon('user',21)+'<span>Owner Demo</span></a></nav>';
+      +'<a href="#about" class="'+(ui.page==='about'?'active':'')+'">'+icon('user',21)+'<span>About</span></a></nav>';
   };
   // App handlers, data and pages remain provided by app.js.
   render(false);
