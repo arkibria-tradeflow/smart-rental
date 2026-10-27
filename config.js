@@ -8,9 +8,9 @@ window.SMART_RENTAL_CONFIG = {
   city: 'Dubai',
   country: 'United Arab Emirates',
   address: 'Afra Plaza, Al Khaleej Street, Al Corniche, Deira, Dubai, UAE',
-  phoneDisplay: '',
-  phoneNumber: '',     // International format, digits only, for tel: links
-  whatsappNumber: '',  // International format, digits only; blank = demo-only
+  phoneDisplay: '+971 56 682 9999',
+  phoneNumber: '971566829999',     // International format, digits only, for tel: links
+  whatsappNumber: '971566829999',  // International format, digits only; blank = demo-only
   email: '',
   logoPath: 'https://dubaigolddistrict.com/sites/default/files/2026-07/wadi_salsabeel_logo_182x128_0.webp',        // e.g. 'assets/client-logo.png'
   heroImage: 'https://images.unsplash.com/photo-1646960700481-c7be5224a7fc?auto=format&fit=crop&w=1400&q=85',
@@ -19,5 +19,8 @@ window.SMART_RENTAL_CONFIG = {
   currency: 'AED',
   rentalPrefix: 'SR',
   storageKey: 'wadi-salsabeel-preview',
-  showDemoBanner: true
+  showDemoBanner: false,
+  googleRating: 4.4,
+  googleReviewCount: 13,
+  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Wadi%20Salsabeel%20Rent%20A%20Car%20LLC&query_place_id=ChIJK16S0oFbXz4RLneOvP455cg'
 };
