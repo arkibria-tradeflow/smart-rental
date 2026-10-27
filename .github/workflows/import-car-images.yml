@@ -26,7 +26,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/
+          git add assets/ premium-home.js
           git rm -f smart-rental-car-images-ready.zip
           if git diff --staged --quiet; then
             echo "No photo changes."
