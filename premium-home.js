@@ -3,10 +3,10 @@
 (function(){
   const heroPhoto='https://images.unsplash.com/photo-1773417889450-220602f31b42?auto=format&fit=crop&w=1500&q=82';
   const categoryPhotos={
-    Economy:'https://images.unsplash.com/photo-1566939888597-ecbfe4c854d0?auto=format&fit=crop&w=650&q=78',
-    Sedan:'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=650&q=78',
+    Economy:'https://images.unsplash.com/photo-1596429916858-6f97b5b9cf48?auto=format&fit=crop&w=650&q=78',
+    Sedan:'https://images.unsplash.com/photo-1578245601540-19edcdc12e7f?auto=format&fit=crop&w=650&q=78',
     SUV:'https://images.unsplash.com/photo-1767274592417-c986b7619c8c?auto=format&fit=crop&w=650&q=78',
-    Luxury:'https://images.unsplash.com/photo-1514316454349-750a7fd3da3a?auto=format&fit=crop&w=650&q=78',
+    Luxury:'https://images.unsplash.com/photo-1556161189-78e416f7e934?auto=format&fit=crop&w=650&q=78',
     Sports:'https://images.unsplash.com/photo-1778959686627-4b77ad253447?auto=format&fit=crop&w=650&q=78'
   };
   header=function(){
