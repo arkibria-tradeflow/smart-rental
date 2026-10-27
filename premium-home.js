@@ -1,13 +1,13 @@
 /* Premium 2026 responsive homepage — white-label presentation layer.
    Existing booking, enquiry and owner demo workflows remain in app.js. */
 (function(){
-  const heroPhoto='https://images.unsplash.com/photo-1674433485952-af5cb22e2602?auto=format&fit=crop&w=1500&q=86';
+  const heroPhoto='assets/range-rover-vogue.webp';
   const categoryPhotos={
-    Economy:'https://images.unsplash.com/photo-1749058983925-0cb49aec5d9f?auto=format&fit=crop&w=650&q=80',
-    Sedan:'https://images.unsplash.com/photo-1578245601540-19edcdc12e7f?auto=format&fit=crop&w=650&q=78',
-    SUV:'https://images.unsplash.com/photo-1767274592417-c986b7619c8c?auto=format&fit=crop&w=650&q=78',
-    Luxury:'https://images.unsplash.com/photo-1556161189-78e416f7e934?auto=format&fit=crop&w=650&q=78',
-    Sports:'https://images.unsplash.com/photo-1778959686627-4b77ad253447?auto=format&fit=crop&w=650&q=78'
+    Economy:'assets/nissan-sunny.webp',
+    Sedan:'assets/hyundai-sonata.webp',
+    SUV:'assets/toyota-fortuner.webp',
+    Luxury:'assets/mercedes-s-class.webp',
+    Sports:'assets/ferrari-f8.webp'
   };
   header=function(){
     return ''
