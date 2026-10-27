@@ -1,0 +1,18 @@
+/* Approved clean studio-style vehicle photos. No cropping. */
+.car-thumb{height:215px!important;background:#fff!important;padding:12px 16px!important}
+.car-thumb img{width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;border-radius:0!important;mix-blend-mode:normal!important;filter:none!important;box-shadow:none!important}
+.detail-image{background:#f8f9fa!important;min-height:400px;padding:22px!important}
+.detail-image>img{width:100%!important;height:100%!important;max-width:760px;max-height:360px!important;aspect-ratio:auto!important;object-fit:contain!important;border-radius:0!important;filter:none!important;box-shadow:none!important}
+.selected-img{background:#fff!important}
+.selected-img img{object-fit:contain!important}
+.rental-image{background:#f8f9fa!important;border-radius:16px!important}
+.rental-image img{object-fit:contain!important;mix-blend-mode:normal!important}
+.premium-home .premium-hero-photo{object-fit:contain!important;background:#fff!important;mask-image:linear-gradient(to right,transparent 0%,#000 9%,#000 100%)!important;-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 9%,#000 100%)!important;box-shadow:none!important}
+.premium-home .premium-category-photo{background:#fff!important;overflow:hidden}
+.premium-home .premium-category-photo img{object-fit:contain!important;object-position:center center!important}
+@media(max-width:800px){
+ .car-thumb{height:185px!important;padding:12px!important}
+ .detail-image{height:310px!important;min-height:310px;padding:12px!important}
+ .detail-image>img{max-height:290px!important}
+ .premium-home .premium-hero-photo{mask-image:none!important;-webkit-mask-image:none!important}
+}
