@@ -13,7 +13,7 @@ window.SMART_RENTAL_CONFIG = {
   whatsappNumber: '',  // International format, digits only; blank = demo-only
   email: '',
   logoPath: 'https://dubaigolddistrict.com/sites/default/files/2026-07/wadi_salsabeel_logo_182x128_0.webp',        // e.g. 'assets/client-logo.png'
-  heroImage: 'https://images.unsplash.com/photo-1695803310125-de2ca24ce08f?auto=format&fit=crop&w=1400&q=85',
+  heroImage: 'https://images.unsplash.com/photo-1646960700481-c7be5224a7fc?auto=format&fit=crop&w=1400&q=85',
   primaryColor: '#263d99',
   darkColor: '#172951',
   currency: 'AED',
