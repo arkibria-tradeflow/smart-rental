@@ -42,10 +42,7 @@ if home_file.exists():
         if key=="heroPhoto":
             txt,n=re.subn(r"const heroPhoto='[^']+';",f"const heroPhoto='assets/{photo}';",txt,count=1)
         else:
-            txt,n=re.subn(r"("+key+r":)'[^']+';",r"\\1'assets/"+photo+"';",txt,count=1)
-            if not n:
-                # Object-property entries use comma delimiters, not semicolons.
-                txt,n=re.subn(r"("+key+r":)'[^']+'",r"\\1'assets/"+photo+"'",txt,count=1)
+            txt,n=re.subn(r"("+key+r":)'[^']+'",lambda m:m.group(1)+f"'assets/{photo}'",txt,count=1)
         if n!=1:raise RuntimeError(f"Could not update homepage photo reference for {key}")
     home_file.write_text(txt,encoding="utf-8")
 missing=sorted(allowed-installed)
