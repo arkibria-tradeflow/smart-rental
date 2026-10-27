@@ -209,3 +209,6 @@
  .sr-review-rating a{font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.sr-category-card,.sr-brand-card{transition:none}}
+
+/* Fractional Google rating is represented without rounding up to five stars. */
+.sr-rating-stars{background:linear-gradient(to right,#d6a14e 88%,#d8dde3 88%);-webkit-background-clip:text;background-clip:text;color:transparent}
