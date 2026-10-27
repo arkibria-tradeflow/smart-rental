@@ -32,3 +32,8 @@ Open the site and try **Cars → Car Details → Request Quote → Owner Demo �
 This is **not a live customer booking system**. It does not check availability, send inquiries to a server, or securely manage customer information. No real customer data should be entered or uploaded. Static GitHub Pages sites are publicly visible and public repos expose the source. `noindex` does not make the demo private.
 
 To give multiple companies **separate live websites**, deploy separate copies or branches with different configs and databases; one public repository is your common template, not a single shared client site.
+
+
+## Car photographs (28 October 2026)
+
+58 optimized WebP vehicle photos have been imported successfully into `assets/` by the GitHub Actions photo-import workflow. The homepage now references the supplied fleet images. `hyundai-staria.webp` and `land-rover-defender.webp` remain from the earlier catalogue imagery until new replacement photographs are supplied. Images must be licensed for commercial use and matched to the actual vehicles before launch.
