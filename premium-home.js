@@ -60,7 +60,7 @@ bottomNav=function(){
 return "<nav class='bottom-nav sr-bottom-nav' aria-label='Mobile navigation'><a href='#home' class='"+(ui.page==="home"?"active":"")+"'>"+icon("grid",21)+"<span>Home</span></a><a href='#fleet' class='"+(["fleet","detail","booking"].includes(ui.page)?"active":"")+"'>"+icon("car",21)+"<span>Explore</span></a><a href='#my-rental' class='"+(ui.page==="my-rental"?"active":"")+"'>"+icon("calendar",21)+"<span>My Rental</span></a><a href='#about' class='"+(ui.page==="about"?"active":"")+"'>"+icon("user",21)+"<span>About</span></a></nav>";
 };
 document.addEventListener("click",function(e){
-const br=e.target.closest("[data-brand-filter]");if(br){e.preventDefault();ui.category="All";ui.search=br.dataset.brandFilter||"";navigate("fleet");return;}
+const br=e.target.closest("[data-brand-filter]");if(br){e.preventDefault();ui.category="All";ui.search="";ui.brand=(br.dataset.brandFilter==="Mercedes"?"Mercedes-Benz":br.dataset.brandFilter)||"All";ui.priceMin="";ui.priceMax="";navigate("fleet");return;}
 const ca=e.target.closest("[data-footer-category]");if(ca){e.preventDefault();ui.category=ca.dataset.footerCategory;ui.search="";navigate("fleet");}
 });
 render(false);
