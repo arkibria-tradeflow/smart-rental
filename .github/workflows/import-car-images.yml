@@ -1,0 +1,36 @@
+name: Import Smart Rental vehicle photographs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'smart-rental-car-images-ready.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-photos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website
+        uses: actions/checkout@v4
+      - name: Install optimized WebP images
+        run: python3 scripts/install_car_images.py smart-rental-car-images-ready.zip assets
+      - name: Commit imported photographs
+        run: |
+          if [ ! -f smart-rental-car-images-ready.zip ]; then
+            echo "Image archive absent; nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/
+          git rm -f smart-rental-car-images-ready.zip
+          if git diff --staged --quiet; then
+            echo "No photo changes."
+          else
+            git commit -m "Import optimized Smart Rental vehicle photographs"
+            git push origin HEAD:main
+          fi
