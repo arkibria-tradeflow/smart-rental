@@ -173,7 +173,10 @@
     }
   },true);
   document.addEventListener("change",function(e){
-    if(e.target.id==="sr-sort-select"){ui.sort=e.target.value;render(false);}
+    if(e.target.id==="sr-sort-select"){ui.sort=e.target.value;render(false);return;}
+    if(e.target.id==="sr-desktop-brand" || e.target.id==="sr-desktop-type"){
+      apply(e.target.closest("form"));
+    }
   });
   document.addEventListener("submit",function(e){
     if(e.target.id==="sr-desktop-filter-form"||e.target.id==="sr-mobile-filter-form"){
