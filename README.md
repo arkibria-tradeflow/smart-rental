@@ -37,3 +37,8 @@ To give multiple companies **separate live websites**, deploy separate copies or
 ## Car photographs (28 October 2026)
 
 58 optimized WebP vehicle photos have been imported successfully into `assets/` by the GitHub Actions photo-import workflow. The homepage now references the supplied fleet images. `hyundai-staria.webp` and `land-rover-defender.webp` remain from the earlier catalogue imagery until new replacement photographs are supplied. Images must be licensed for commercial use and matched to the actual vehicles before launch.
+
+
+## Hero V4 — six generated showcase visuals (28 October 2026)
+
+The six approved AI-generated luxury car photos are installed in `assets/hero/`, separate from the product catalogue photos. The homepage rotates those six images automatically every 5 seconds and five independent customer benefit headlines every 9 seconds. Thumbnails, navigation arrows and mobile swipe support manual selection; reduced-motion settings suppress automatic rotation. Showcase art is illustrative and vehicle availability must be confirmed by the rental company.
