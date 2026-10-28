@@ -50,3 +50,51 @@
  .sr-home .sr-lux-slide,.sr-home .sr-lux-slide.is-active{transition:none!important;transform:none!important}
  .sr-home .sr-lux-dot{transition:none!important}
 }
+
+/* Five benefit-led messages: consistent editorial typography and restrained transitions. */
+.sr-home .sr-hero-copy .sr-hero-message{
+  min-height:286px;display:flex;flex-direction:column;justify-content:center;
+}
+.sr-home .sr-hero-copy h1[data-sr-hero-title]{
+  font-size:clamp(39px,4.4vw,63px);line-height:1.14;
+  letter-spacing:-.068em;margin:17px 0 15px;max-width:610px;
+}
+.sr-home .sr-hero-copy h1[data-sr-hero-title] span,
+.sr-home .sr-hero-copy h1[data-sr-hero-title] em{display:block}
+.sr-home .sr-hero-copy h1[data-sr-hero-title] em{
+  color:#a9855f;font-style:normal
+}
+.sr-home .sr-hero-copy h1.sr-hero-long{font-size:clamp(35px,3.95vw,55px)}
+.sr-home .sr-hero-message p[data-sr-hero-description]{
+  color:#657180;font-size:13px;line-height:1.7;
+  max-width:400px;margin:0;min-height:44px;
+}
+.sr-home .sr-hero-message.sr-message-enter{animation:sr-message-enter .7s ease both}
+@keyframes sr-message-enter{
+  from{opacity:.42;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:1100px){
+  .sr-home .sr-hero-copy .sr-hero-message{min-height:275px}
+  .sr-home .sr-hero-copy h1[data-sr-hero-title]{font-size:clamp(37px,4.5vw,54px)}
+  .sr-home .sr-hero-copy h1.sr-hero-long{font-size:clamp(34px,4vw,49px)}
+}
+@media(max-width:800px){
+  .sr-home .sr-hero-copy .sr-hero-message{min-height:217px;justify-content:flex-start}
+  .sr-home .sr-hero-copy h1[data-sr-hero-title]{
+    font-size:clamp(33px,8.6vw,45px);line-height:1.15;
+    letter-spacing:-.06em;margin:14px 0 11px;
+  }
+  .sr-home .sr-hero-copy h1.sr-hero-long{font-size:clamp(29px,7.6vw,38px)}
+  .sr-home .sr-hero-message p[data-sr-hero-description]{
+    font-size:12px;line-height:1.64;min-height:0;max-width:370px;
+  }
+}
+@media(max-width:400px){
+  .sr-home .sr-hero-copy h1[data-sr-hero-title]{font-size:clamp(30px,8.4vw,36px)}
+  .sr-home .sr-hero-copy h1.sr-hero-long{font-size:clamp(27px,7.1vw,31px)}
+  .sr-home .sr-hero-copy .sr-hero-message{min-height:209px}
+}
+@media(prefers-reduced-motion:reduce){
+  .sr-home .sr-hero-message.sr-message-enter{animation:none!important}
+}
