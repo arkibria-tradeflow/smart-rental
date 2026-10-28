@@ -68,6 +68,8 @@
           leadNode.textContent=msg.lead;
           accentNode.textContent=msg.accent;
           descriptionNode.textContent=msg.detail;
+          const titleElement=leadNode.closest("h1");
+          if(titleElement)titleElement.classList.toggle("sr-hero-long",Number(slides[target].dataset.srMessage)===2);
           if(messageNode && !reduced.matches){
             messageNode.classList.remove("sr-message-enter");
             void messageNode.offsetWidth;
