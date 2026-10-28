@@ -59,7 +59,7 @@
       "<label class='sr-filter-label' for='"+prefix+"-min'>Listed price (AED)</label>"+
       "<div class='sr-price-row'><div><span>Minimum</span><input class='sr-filter-control' id='"+prefix+"-min' name='priceMin' type='number' inputmode='numeric' min='0' max='100000' step='1' placeholder='No minimum' value='"+esc(ui.priceMin)+"'></div>"+
       "<div><span>Maximum</span><input class='sr-filter-control' id='"+prefix+"-max' name='priceMax' type='number' inputmode='numeric' min='0' max='100000' step='1' placeholder='No maximum' value='"+esc(ui.priceMax)+"'></div></div>"+
-      "<p class='sr-price-hint'>These are catalogue figures, not confirmed daily rates.</p>";
+      "<p class='sr-price-hint'>Listed amounts are indicative and not confirmed daily rates.</p>";
   }
   function appliedChips(){
     let chips=[];
@@ -85,7 +85,7 @@
       "<div class='sr-fleet-card-info'>"+
         "<div class='sr-fleet-card-brand'>"+esc(brandOf(c))+"</div>"+
         "<h3>"+esc(c.name)+"</h3>"+
-        "<div class='sr-fleet-card-bottom'><div><span>Catalogue price</span><strong>"+price+"</strong></div>"+
+        "<div class='sr-fleet-card-bottom'><div><span>Indicative price</span><strong>"+price+"</strong></div>"+
         "<button type='button' class='sr-fleet-card-button' data-action='details' data-id='"+esc(c.id)+"' aria-label='View details of "+esc(c.name)+"'>"+icon("arrow",18)+"</button></div>"+
       "</div></article>";
   }
@@ -127,7 +127,7 @@
         appliedChips()+
         (list.length?"<div class='sr-fleet-grid'>"+list.map(cardForExplore).join("")+"</div>":
           "<div class='sr-no-results'>"+icon("search",34)+"<h2>No cars found</h2><p>Try a different brand, type or price range.</p><button data-sr-reset type='button' class='sr-apply-btn'>Clear filters</button></div>")+
-        "<p class='sr-catalogue-note'>Prices are indicative catalogue figures; the rental period, availability, deposits and final costs are confirmed by the rental team.</p>"+
+        "<p class='sr-catalogue-note'>Listed amounts are indicative; the rental period, availability, deposits and final costs must be confirmed by the rental team.</p>"+
         "</section></div>"+filterDialog()+"</main>";
   };
   function clear(){
