@@ -24,8 +24,8 @@ function openModal(trigger){
     '<section class="sr-quote-dialog" role="dialog" aria-modal="true" aria-labelledby="sr-quote-heading" aria-describedby="sr-quote-subtitle">',
       '<div class="sr-quote-top">',
         '<div><span class="sr-quote-eyebrow">PERSONALIZED RENTAL ENQUIRY</span>',
-          '<h2 id="sr-quote-heading">Request a Quotation</h2>',
-          '<p id="sr-quote-subtitle">Choose your preferences and prepare a message to our rental team.</p></div>',
+          '<h2 id="sr-quote-heading">Check Availability &amp; Get Quote</h2>',
+          '<p id="sr-quote-subtitle">Review your car and dates, then ask the rental team to confirm availability and the final price.</p></div>',
         '<button class="sr-quote-close" type="button" data-sr-quote-close aria-label="Close quotation form">×</button>',
       '</div>',
       '<form id="sr-quote-form" class="sr-quote-form">',
@@ -44,7 +44,7 @@ function openModal(trigger){
         '<p class="sr-quote-disclaimer">This opens WhatsApp with a prepared message. Your enquiry is only sent when you press Send in WhatsApp. The rental team must confirm availability and pricing.</p>',
         '<div class="sr-quote-footer">',
           '<button type="button" class="sr-quote-cancel" data-sr-quote-close>Cancel</button>',
-          '<button type="submit" class="sr-quote-submit">Continue to WhatsApp <span aria-hidden="true">↗</span></button>',
+          '<button type="submit" class="sr-quote-submit">Check Availability via WhatsApp <span aria-hidden="true">↗</span></button>',
         '</div>',
       '</form>',
     '</section>'
@@ -104,7 +104,7 @@ document.addEventListener("submit",function(e){
   if(pickup&&ret&&ret<=pickup){window.alert("Return date must be later than pick-up date.");return;}
   const message=[
     "Hello "+business+",",
-    "I would like to request a car rental quotation.",
+    "Could you please check car availability for my dates and provide a rental quotation?",
     "",
     "Car type: "+type,
     ...(model?["Preferred model: "+model]:[]),
@@ -112,7 +112,7 @@ document.addEventListener("submit",function(e){
     ...(ret?["Return: "+ret]:[]),
     ...(note?["Additional details: "+note]:[]),
     "",
-    "Please confirm availability, the rental price and period, security deposit, insurance and additional charges."
+    "Please confirm whether the car is available, the final rental price, the security deposit, insurance and any additional charges."
   ].join("\n");
   window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(message),"_blank","noopener,noreferrer");
   closeModal();
