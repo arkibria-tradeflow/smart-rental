@@ -17,7 +17,6 @@
     if(current){current.destroy();current=null;}
     if(!root)return;
     const slides=Array.from(root.querySelectorAll(".sr-lux-slide"));
-    const thumbs=Array.from(app.querySelectorAll(".sr-hero-thumb"));
     if(slides.length<2)return;
     let messages=[];
     try{messages=JSON.parse(root.dataset.srMessages||"[]");}catch(e){}
@@ -97,10 +96,6 @@
         const img=slides[index].querySelector("img");
         if(carName)carName.textContent=img?.alt||"Featured vehicle";
         if(counter)counter.textContent=String(index+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
-        thumbs.forEach((thumb,i)=>{
-          thumb.classList.toggle("is-active",i===index);
-          thumb.setAttribute("aria-pressed",String(i===index));
-        });
         preload(index);
       });
     }
@@ -124,10 +119,6 @@
       const arrow=e.target.closest("[data-sr-step]");
       if(arrow){changeCar(state.carIndex+Number(arrow.dataset.srStep),true);}
     }
-    function onThumbClick(e){
-      const btn=e.target.closest("[data-sr-go]");
-      if(btn && app.contains(btn))changeCar(Number(btn.dataset.srGo),true);
-    }
     const enter=()=>{state.hovering=true;};
     const leave=()=>{state.hovering=false;};
     const focus=()=>{state.focused=true;};
@@ -144,7 +135,6 @@
         changeCar(state.carIndex+(dx<0?1:-1),true);
     };
     root.addEventListener("click",onRootClick);
-    app.addEventListener("click",onThumbClick);
     hoverArea.addEventListener("mouseenter",enter);
     hoverArea.addEventListener("mouseleave",leave);
     hoverArea.addEventListener("focusin",focus);
@@ -155,7 +145,6 @@
     state.destroy=()=>{
       timers.forEach(id=>window.clearInterval(id));
       root.removeEventListener("click",onRootClick);
-      app.removeEventListener("click",onThumbClick);
       hoverArea.removeEventListener("mouseenter",enter);
       hoverArea.removeEventListener("mouseleave",leave);
       hoverArea.removeEventListener("focusin",focus);
