@@ -13,6 +13,11 @@ function stamp(s){
 function days(a,b){const x=stamp(a),y=stamp(b);return x===null||y===null?0:Math.round((y-x)/D);}
 function money(v){return CFG.currency+" "+Math.round(v).toLocaleString("en-AE");}
 function rateMoney(v){return CFG.currency+" "+Number(v).toLocaleString("en-AE",{minimumFractionDigits:Number.isInteger(v)?0:2,maximumFractionDigits:2});}
+function periodPrice(rate,period){
+ if(rate===null)return null;
+ return rate*(period==="Weekly"?7:period==="Monthly"?30:1);
+}
+function periodSuffix(period){return period==="Weekly"?"/week":period==="Monthly"?"/30 days":"/day";}
 function math(car){
  const period=plans[ui.period]?ui.period:"Daily",plan=plans[period];
  const daysCount=days(selection.pickup,selection.returnDate);
@@ -58,12 +63,14 @@ function detailV2(){
   "<small>"+(o.rate===null?"Rate on request":money(o.rate))+"</small></button>").join("");
  const periodButtons=["Daily","Weekly","Monthly"].map(k=>{
  const discount=plans[k].off;
- const rate=p.unit===null?"Ask for rate":rateMoney(p.unit*(1-discount));
+ const rate=p.unit===null?null:p.unit*(1-discount);
+ const price=periodPrice(rate,k);
+ const label=price===null?"Ask for rate":rateMoney(price);
  return "<button type='button' data-action='period' data-period='"+k+
   "' class='sr-vdetail-period"+(p.period===k?" is-selected":"")+"' aria-pressed='"+String(p.period===k)+
-  "' aria-label='"+k+" rental, "+Math.round(discount*100)+" percent discount, "+rate+" per day'>"+
+  "' aria-label='"+k+" rental, "+Math.round(discount*100)+" percent discount, "+label+" "+periodSuffix(k)+"'>"+
   "<strong>"+k+"</strong><small>"+(discount?"−"+Math.round(discount*100)+"%":"Regular")+"</small>"+
-  "<span class='sr-vdetail-tab-price'>"+esc(rate)+"<i>/day</i></span></button>";
+  "<span class='sr-vdetail-tab-price'><b>"+esc(label)+"</b><i>"+periodSuffix(k)+"</i></span></button>";
  }).join("");
  const breakdown=p.valid&&p.total!==null?
   "<div class='sr-vdetail-estimate-line'><span>Estimated saving</span><b>"+money(p.saved)+"</b></div>"+
@@ -78,9 +85,9 @@ function detailV2(){
       "<figcaption>Vehicle image for reference · Please confirm the exact specification</figcaption></figure></div>"+
   "<div class='sr-vdetail-details-col'>"+
     "<section class='sr-vdetail-rate sr-vdetail-rate-compact' aria-label='Selected rental rate'>"+
-      "<div class='sr-vdetail-rate-compact-main'><span>"+esc(p.period)+" rate <small>"+(p.plan.off?Math.round(p.plan.off*100)+"% off the daily reference":"Daily reference price")+"</small></span>"+
-      "<strong>"+(p.planUnit===null?"Ask for rate":rateMoney(p.planUnit))+" <em>/day</em></strong></div>"+
-      (p.plan.off&&p.unit!==null?"<div class='sr-vdetail-rate-compare'>Daily reference: "+rateMoney(p.unit)+" /day</div>":"")+
+      "<div class='sr-vdetail-rate-compact-main'><span>"+esc(p.period)+" rate <small>"+(p.plan.off?Math.round(p.plan.off*100)+"% less than the Daily plan":"Daily reference price")+"</small></span>"+
+      "<strong>"+(p.planUnit===null?"Ask for rate":rateMoney(periodPrice(p.planUnit,p.period)))+" <em>"+periodSuffix(p.period)+"</em></strong></div>"+
+      (p.plan.off&&p.unit!==null?"<div class='sr-vdetail-rate-compare'>Equivalent to "+rateMoney(p.planUnit)+" /day · Daily reference "+rateMoney(p.unit)+" /day</div>":"")+
     "</section>"+
     "<section class='sr-vdetail-options'><div class='sr-vdetail-section-title'><h2>Rental plan</h2><span>Select a plan</span></div>"+
       "<div class='sr-vdetail-periods' role='group' aria-label='Rental plan'>"+periodButtons+"</div>"+
