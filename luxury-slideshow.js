@@ -27,7 +27,7 @@
     const messagePanel=app.querySelector(".sr-hero-message");
     const carName=root.querySelector("[data-sr-lux-name]");
     const counter=root.querySelector("[data-sr-lux-count]");
-    const hoverArea=app.querySelector(".sr-hero-layout")||root;
+    const hoverArea=root.querySelector(".sr-lux-controls")||root;
     const timers=[];
     const state={
       root,carIndex:0,messageIndex:0,request:0,
