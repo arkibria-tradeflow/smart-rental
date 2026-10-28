@@ -67,7 +67,7 @@ return "<button class='sr-brand-card' data-brand-filter='"+esc(b[0])+"' aria-lab
 return "<main class='sr-home'>"+
 "<section class='sr-hero'><div class='container sr-hero-layout'><div class='sr-hero-copy'><span class='sr-eyebrow'><i></i> CAR RENTAL IN "+esc(CFG.city.toUpperCase())+"</span>"+
 "<div class='sr-hero-message'><h1 data-sr-hero-title><span data-sr-hero-lead>"+esc(heroMessages[0].lead)+"</span> <em data-sr-hero-accent>"+esc(heroMessages[0].accent)+"</em></h1><p data-sr-hero-description>"+esc(heroMessages[0].detail)+"</p></div>"+
-"<div class='sr-hero-actions'><button class='sr-button-dark' type='button' data-action='browse'>Explore our cars "+icon("arrow",17)+"</button>"+
+"<div class='sr-hero-actions'><button class='sr-button-dark' type='button' data-action='browse'>Explore Cars "+icon("arrow",17)+"</button>"+
 "<a class='sr-button-link' href='https://wa.me/"+PHONE+"' target='_blank' rel='noopener noreferrer'>"+icon("message",17)+" Chat on WhatsApp</a></div></div>"+
 "<div class='sr-hero-media'><div class='sr-hero-glow'></div>"+luxuryHero()+"</div></div>"+
 "<div class='container sr-search-holder'><div class='sr-search-label'><span>FIND YOUR NEXT DRIVE</span><strong>Pick your dates and car style</strong></div>"+searchFields()+"</div></section>"+
