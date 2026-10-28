@@ -60,6 +60,21 @@ return "<form id='quick-search' class='sr-search' aria-label='Find a car'>"+
 ["All","Economy","Sedan","SUV","Luxury","Sports","Van"].map(function(c){return "<option value='"+c+"' "+(ui.category===c?"selected":"")+">"+(c==="All"?"Any style":c==="Sports"?"Supercars":c)+"</option>";}).join("")+
 "</select></div><button class='sr-search-submit' type='submit'>"+icon("search",19)+"<span>Find my car</span>"+icon("arrow",18)+"</button></form>";
 };
+/* A separate mobile action row follows the vehicle in actual DOM order.
+   Desktop actions remain alongside the headline. CSS selects one copy per layout. */
+function heroActions(mode){
+  return "<div class='sr-hero-actions sr-hero-actions-"+mode+"'>"+
+    "<button class='sr-button-dark' type='button' data-action='browse'>Explore Cars "+icon("arrow",17)+"</button>"+
+    "<a class='sr-button-link' href='https://wa.me/"+PHONE+"' target='_blank' rel='noopener noreferrer'>"+icon("message",17)+" Chat on WhatsApp</a>"+
+    "<button class='sr-quote-button' type='button' data-action='quote-inquiry' aria-haspopup='dialog'>"+icon("clipboard",17)+" Request a Quote</button>"+
+  "</div>";
+}
+function heroProof(mode){
+ return "<div class='sr-hero-proof sr-hero-proof-"+mode+"'>"+
+  "<span>"+icon("car",18)+" Explore our fleet</span>"+
+  "<span>"+icon("calendar",18)+" Flexible rental enquiries</span>"+
+  "<span>"+icon("pin",18)+" Dubai, UAE</span></div>";
+}
 home=function(){
 const categoryCards=cats.map(function(c){
 return "<button class='sr-category-card' data-action='category' data-category='"+c[0]+"' aria-label='Explore "+c[1]+"'><span class='sr-category-image'>"+photo(c[2],c[1]+" car")+"</span><span class='sr-category-label'><strong>"+c[1]+"</strong><span>"+icon("arrow",18)+"</span></span></button>";
@@ -71,10 +86,8 @@ return "<button class='sr-brand-card' data-brand-filter='"+esc(b[0])+"' aria-lab
 return "<main class='sr-home'>"+
 "<section class='sr-hero'><div class='container sr-hero-layout'><div class='sr-hero-copy'><span class='sr-eyebrow'><i></i> PREMIUM CAR RENTAL IN "+esc(CFG.city.toUpperCase())+"</span>"+
 "<div class='sr-hero-message'><h1 data-sr-hero-title><span data-sr-hero-lead>"+esc(heroMessages[0].lead)+"</span> <em data-sr-hero-accent>"+esc(heroMessages[0].accent)+"</em></h1><p data-sr-hero-description>"+esc(heroMessages[0].detail)+"</p></div>"+
-"<div class='sr-hero-actions'><button class='sr-button-dark' type='button' data-action='browse'>Explore Cars "+icon("arrow",17)+"</button>"+
-"<a class='sr-button-link' href='https://wa.me/"+PHONE+"' target='_blank' rel='noopener noreferrer'>"+icon("message",17)+" Chat on WhatsApp</a>"+
-"<button class='sr-quote-button' type='button' data-action='quote-inquiry' aria-haspopup='dialog'>"+icon("clipboard",17)+" Request a Quote</button></div>"+"<div class='sr-hero-proof'><span>"+icon("car",18)+" Explore our fleet</span><span>"+icon("calendar",18)+" Flexible rental enquiries</span><span>"+icon("pin",18)+" Dubai, UAE</span></div></div>"+
-"<div class='sr-hero-media'><div class='sr-hero-glow'></div>"+luxuryHero()+"</div></div>"+
+heroActions("desktop")+heroProof("desktop")+"</div>"+
+"<div class='sr-hero-media'><div class='sr-hero-glow'></div>"+luxuryHero()+"</div>"+heroActions("mobile")+heroProof("mobile")+"</div>"+
 "<div class='container sr-search-holder'><div class='sr-search-label'><span>FIND YOUR NEXT DRIVE</span><strong>Pick your dates and car style</strong></div>"+searchFields()+"</div></section>"+
 "<div class='container sr-trust-row'><span>"+icon("calendar",19)+" Daily · Weekly · Monthly</span><span>"+icon("car",19)+" Economy to luxury</span><span>"+icon("pin",19)+" Based in Deira, Dubai</span></div>"+
 "<section class='sr-section sr-categories' id='categories'><div class='container'><div class='sr-section-heading'><div><span class='sr-overline'>THE COLLECTION</span><h2>Explore by category</h2><p>Something for every kind of drive.</p></div><a class='sr-inline-link' href='#fleet'>View all cars "+icon("arrow",17)+"</a></div><div class='sr-category-grid'>"+categoryCards+"</div></div></section>"+
