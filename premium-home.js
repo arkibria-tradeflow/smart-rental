@@ -29,7 +29,7 @@ function luxuryHero(){
     "<div class='sr-lux-slide"+(i===0?" is-active":"")+"' data-sr-slide='"+i+"' aria-hidden='"+(i===0?"false":"true")+"'>"+
     heroImage(car[0],car[1],i===0)+"</div>"
   ).join("");
-  return "<div class='sr-lux-slider' id='sr-luxury-slideshow' aria-label='Six premium vehicle showcase images'>"+
+  return "<div class='sr-lux-slider' id='sr-luxury-slideshow' aria-label='Six premium vehicle showcase images' data-sr-messages='"+esc(JSON.stringify(heroMessages))+"'>"+
     "<div class='sr-lux-track'>"+slides+"</div>"+
     "<div class='sr-lux-controls'>"+
       "<div class='sr-lux-caption'><span class='sr-lux-overline'>FEATURED COLLECTION</span><strong data-sr-lux-name>"+esc(showcaseCars[0][1])+"</strong></div>"+
