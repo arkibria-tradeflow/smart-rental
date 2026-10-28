@@ -41,7 +41,7 @@
         "<p class='sr-vdetail-period-note'>Ask for the <strong>"+period.toLowerCase()+"</strong> rental quote, including deposit, mileage and insurance terms.</p>"+
       "</section>"+
       "<section class='sr-vdetail-facts' aria-label='Rental information'>"+
-        "<div>"+icon("map-pin",18)+"<span><small>Collection</small><strong>"+esc(CFG.city)+", UAE</strong></span></div>"+
+        "<div>"+icon("pin",18)+"<span><small>Collection</small><strong>"+esc(CFG.city)+", UAE</strong></span></div>"+
         "<div>"+icon("calendar",18)+"<span><small>Availability</small><strong>Confirm with team</strong></span></div>"+
       "</section>"+
       "<div class='sr-vdetail-disclosure'>"+icon("shield",17)+"<span>No automatic booking or payment. A team member must confirm the vehicle, availability and full rental terms.</span></div>"+
