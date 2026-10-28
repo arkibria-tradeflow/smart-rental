@@ -4,8 +4,8 @@
   "use strict";
   const app=document.getElementById("app");
   if(!app)return;
-  const intervalMs=5000;
-  const pauseMs=9000;
+  const intervalMs=7000;
+  const pauseMs=12000;
   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
   let mounted=null;
   function unmount(){
@@ -21,6 +21,12 @@
     const slides=Array.from(root.querySelectorAll(".sr-lux-slide"));
     const dots=Array.from(root.querySelectorAll(".sr-lux-dot"));
     if(slides.length<2)return;
+    let messages=[];
+    try{messages=JSON.parse(root.dataset.srMessages||"[]");}catch(e){messages=[];}
+    const messageNode=app.querySelector(".sr-hero-message");
+    const leadNode=app.querySelector("[data-sr-hero-lead]");
+    const accentNode=app.querySelector("[data-sr-hero-accent]");
+    const descriptionNode=app.querySelector("[data-sr-hero-description]");
     const name=root.querySelector("[data-sr-lux-name]");
     const counter=root.querySelector("[data-sr-lux-count]");
     const state={root,slides,dots,current:0,pending:0,pausedUntil:0,hovering:false,focused:false,interval:null,startX:null,startY:null};
@@ -57,6 +63,17 @@
         slides[target].classList.add("is-active");
         slides[target].setAttribute("aria-hidden","false");
         state.current=target;
+        const msg=messages[Number(slides[target].dataset.srMessage)];
+        if(msg && leadNode && accentNode && descriptionNode){
+          leadNode.textContent=msg.lead;
+          accentNode.textContent=msg.accent;
+          descriptionNode.textContent=msg.detail;
+          if(messageNode && !reduced.matches){
+            messageNode.classList.remove("sr-message-enter");
+            void messageNode.offsetWidth;
+            messageNode.classList.add("sr-message-enter");
+          }
+        }
         const img=slides[target].querySelector("img");
         if(name)name.textContent=img?.alt||"Premium car";
         if(counter)counter.textContent=String(target+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
@@ -73,10 +90,12 @@
       const dot=e.target.closest("[data-sr-go]");
       if(dot)show(Number(dot.dataset.srGo),true);
     });
-    root.addEventListener("mouseenter",()=>{state.hovering=true;});
-    root.addEventListener("mouseleave",()=>{state.hovering=false;});
-    root.addEventListener("focusin",()=>{state.focused=true;});
-    root.addEventListener("focusout",e=>{if(!root.contains(e.relatedTarget))state.focused=false;});
+    // Pause while visitors are reading the headline as well as while using the car controls.
+    const hoverArea=root.closest(".sr-hero-layout")||root;
+    hoverArea.addEventListener("mouseenter",()=>{state.hovering=true;});
+    hoverArea.addEventListener("mouseleave",()=>{state.hovering=false;});
+    hoverArea.addEventListener("focusin",()=>{state.focused=true;});
+    hoverArea.addEventListener("focusout",e=>{if(!hoverArea.contains(e.relatedTarget))state.focused=false;});
     root.addEventListener("touchstart",e=>{
       if(e.touches.length!==1)return;
       state.startX=e.touches[0].clientX;
