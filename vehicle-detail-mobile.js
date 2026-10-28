@@ -36,6 +36,12 @@ function datesTimeline(){
    "' aria-pressed='"+String(pickup||ret)+"' aria-label='"+name+" "+value+"'><span>"+name+"</span><strong>"+dt.getUTCDate()+"</strong></button>";
  }).join("")+"</div>";
 }
+function adjustPlan(){
+  const n=days(selection.pickup,selection.returnDate);
+  if(n>=30)ui.period="Monthly";
+  else if(n>=7)ui.period="Weekly";
+  else if(n>0)ui.period="Daily";
+}
 function field(key,label){
  return "<label class='sr-vdetail-date-field'><span>"+label+"</span><input type='date' data-sr-date='"+key+
  "' min='"+dateISO()+"' value='"+esc(selection[key])+"' aria-label='"+label+"'></label>";
@@ -114,6 +120,7 @@ document.addEventListener("click",function(e){
    if(value<=selection.pickup){selection.pickup=value;selection.returnDate="";selection.phase="return";}
    else{selection.returnDate=value;selection.phase="pickup";}
   }
+  adjustPlan();
   render(false);return;
  }
  if(e.target.closest("[data-sr-clear-dates]")&&ui.page==="detail"){
@@ -125,7 +132,24 @@ document.addEventListener("change",function(e){
  if(!el||ui.page!=="detail")return;
  selection[el.dataset.srDate]=el.value;
  selection.phase=el.dataset.srDate==="pickup"?"return":"pickup";
+ adjustPlan();
  render(false);
 });
+document.addEventListener("click",function(e){
+ const btn=e.target.closest("[data-sr-whatsapp-detail]");
+ if(!btn||ui.page!=="detail")return;
+ e.preventDefault();
+ e.stopPropagation();
+ const phone=String(CFG.whatsappNumber||"").replace(/\D/g,"");
+ if(!phone)return;
+ const lines=["Hello "+CFG.businessName+",",
+  "I would like to enquire about "+(btn.dataset.model||"a rental car")+".",
+  ...(btn.dataset.pickup?["Pick-up: "+btn.dataset.pickup]:[]),
+  ...(btn.dataset.returnDate?["Return: "+btn.dataset.returnDate]:[]),
+  ...(btn.dataset.pickup&&btn.dataset.returnDate?["Preferred plan: "+(btn.dataset.period||"Daily")]:[]),
+  ...(btn.dataset.estimate?["Estimated total: "+btn.dataset.estimate+" (subject to confirmation)"]:[]),
+  "Please confirm availability, the rental rate, deposit and insurance terms."];
+ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(lines.join("\n")),"_blank","noopener,noreferrer");
+},true);
 if(ui.page==="detail")render(false);
 })();
