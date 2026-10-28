@@ -1,7 +1,34 @@
 /* Smart Rental premium homepage. Main application workflows stay in app.js. */
 (function(){
 "use strict";
-const imgHero="assets/range-rover-velar.webp";
+/* All higher-end listed vehicles (indicative catalogue figure >= AED 1,000). No price claims in slideshow. */
+const highlightIds=["rolls-royce-cullinan","lamborghini-urus","ferrari-f8","mercedes-g63","bentley-bentayga","mclaren-750s"];
+const luxuryCars=cars.filter(c=>Number.isFinite(c.rate)&&c.rate>=1000).sort((a,b)=>{
+  const ai=highlightIds.indexOf(a.id),bi=highlightIds.indexOf(b.id);
+  if(ai>=0&&bi>=0)return ai-bi;
+  if(ai>=0)return -1;
+  if(bi>=0)return 1;
+  return (b.rate-a.rate)||a.name.localeCompare(b.name);
+});
+function luxuryHero(){
+ const slides=luxuryCars.map((c,i)=>
+  "<div class='sr-lux-slide"+(i===0?" is-active":"")+"' data-sr-slide='"+i+"' aria-hidden='"+(i===0?"false":"true")+"'>"+
+   "<img class='sr-hero-car' "+(i===0?"src='":"data-src='")+"assets/"+esc(c.id)+".webp' alt='"+esc(c.name)+"' "+(i===0?"fetchpriority='high' loading='eager'":"loading='lazy'")+" decoding='async'></div>"
+ ).join("");
+ const dots=luxuryCars.map((c,i)=>
+  "<button type='button' class='sr-lux-dot"+(i===0?" is-active":"")+"' data-sr-go='"+i+"' aria-label='Show "+esc(c.name)+"' aria-pressed='"+(i===0?"true":"false")+"'></button>"
+ ).join("");
+ return "<div class='sr-lux-slider' id='sr-luxury-slideshow' aria-label='Featured luxury rental cars'>"+
+  "<div class='sr-lux-track'>"+slides+"</div>"+
+  "<div class='sr-lux-controls'>"+
+   "<div class='sr-lux-caption'><span class='sr-lux-overline'>FEATURED COLLECTION</span><strong data-sr-lux-name>"+esc(luxuryCars[0]?.name||"Luxury cars")+"</strong></div>"+
+   "<div class='sr-lux-navigation'><span class='sr-lux-counter' data-sr-lux-count>01 / "+String(luxuryCars.length).padStart(2,"0")+"</span>"+
+    "<div class='sr-lux-dots' aria-label='Choose a featured car'>"+dots+"</div>"+
+    "<button type='button' class='sr-lux-arrow' data-sr-step='-1' aria-label='Previous car'>"+icon("back",17)+"</button>"+
+    "<button type='button' class='sr-lux-arrow' data-sr-step='1' aria-label='Next car'>"+icon("chevron",17)+"</button>"+
+   "</div></div></div>";
+}
+
 const cats=[["Economy","Economy","nissan-sunny"],["Sedan","Sedans","hyundai-sonata"],["SUV","SUVs","toyota-fortuner"],["Luxury","Luxury","mercedes-s-class"],["Sports","Supercars","ferrari-f8"]];
 const brands=[["Toyota","toyota-corolla"],["Hyundai","hyundai-sonata"],["Nissan","nissan-patrol-new"],["Mercedes","mercedes-c200"],["BMW","bmw-5-series"],["Range Rover","range-rover-velar"],["Audi","audi-a6"],["Lamborghini","lamborghini-huracan"]];
 const mapURL=CFG.googleMapsUrl||"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(CFG.businessName+" "+CFG.city);
@@ -35,7 +62,7 @@ return "<main class='sr-home'>"+
 "<h1>Every journey starts with <em>the right car.</em></h1><p>From easy city drives to something extraordinary. Find the car that fits your plans.</p>"+
 "<div class='sr-hero-actions'><button class='sr-button-dark' type='button' data-action='browse'>Explore our cars "+icon("arrow",17)+"</button>"+
 "<a class='sr-button-link' href='https://wa.me/"+PHONE+"' target='_blank' rel='noopener noreferrer'>"+icon("message",17)+" Chat on WhatsApp</a></div></div>"+
-"<div class='sr-hero-media'><div class='sr-hero-glow'></div><img class='sr-hero-car' src='"+imgHero+"' alt='Range Rover Velar' decoding='async' fetchpriority='high'><span class='sr-hero-tag'>Range Rover Velar</span></div></div>"+
+"<div class='sr-hero-media'><div class='sr-hero-glow'></div>"+luxuryHero()+"</div></div>"+
 "<div class='container sr-search-holder'><div class='sr-search-label'><span>FIND YOUR NEXT DRIVE</span><strong>Pick your dates and car style</strong></div>"+searchFields()+"</div></section>"+
 "<div class='container sr-trust-row'><span>"+icon("calendar",19)+" Daily · Weekly · Monthly</span><span>"+icon("car",19)+" Economy to luxury</span><span>"+icon("pin",19)+" Based in Deira, Dubai</span></div>"+
 "<section class='sr-section sr-categories' id='categories'><div class='container'><div class='sr-section-heading'><div><span class='sr-overline'>THE COLLECTION</span><h2>Explore by category</h2><p>Something for every kind of drive.</p></div><a class='sr-inline-link' href='#fleet'>View all cars "+icon("arrow",17)+"</a></div><div class='sr-category-grid'>"+categoryCards+"</div></div></section>"+
