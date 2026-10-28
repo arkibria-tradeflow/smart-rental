@@ -1,0 +1,36 @@
+name: Import six AI-generated Smart Rental hero images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'smart-rental-hero-images-ready.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  import-hero:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site
+        uses: actions/checkout@v4
+      - name: Import six optimized showcase photos
+        run: python3 scripts/install_hero_images.py
+      - name: Commit hero photos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/hero/
+          git rm -f smart-rental-hero-images-ready.zip
+          if ! git diff --staged --quiet; then
+            git commit -m "Import six generated luxury hero photos"
+            git push origin HEAD:main
+          fi
+      - name: Request Pages rebuild
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"
