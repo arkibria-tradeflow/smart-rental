@@ -185,3 +185,25 @@
   .sr-vdetail-v2 .sr-vdetail-tab-price{font-size:9px!important}
   .sr-vdetail-v2 .sr-vdetail-cta-whatsapp{min-width:88px!important}
 }
+
+
+/* Rate tabs show price for their actual period, not three identical /day labels. */
+.sr-vdetail-v2 .sr-vdetail-tab-price{
+  display:flex!important;flex-direction:column!important;align-items:center;
+  white-space:normal!important;gap:2px!important;min-width:0;max-width:100%;
+}
+.sr-vdetail-v2 .sr-vdetail-tab-price b{
+  display:block;font-size:clamp(10px,2.55vw,12px);font-weight:850;
+  line-height:1.1;white-space:nowrap;letter-spacing:-.035em;
+}
+.sr-vdetail-v2 .sr-vdetail-tab-price i{
+  display:block;font-style:normal;font-size:9px!important;opacity:.8;
+  font-weight:650;line-height:1.15;
+}
+.sr-vdetail-v2 .sr-vdetail-rate-compact-main strong em{
+  font-size:11px!important;white-space:nowrap!important;
+}
+@media(max-width:390px){
+ .sr-vdetail-v2 .sr-vdetail-tab-price b{font-size:10px!important}
+ .sr-vdetail-v2 .sr-vdetail-period{padding:7px 2px!important}
+}
