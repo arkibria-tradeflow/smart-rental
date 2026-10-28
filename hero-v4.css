@@ -216,3 +216,120 @@
  .sr-home .sr-hero-message.sr-message-enter{animation:none!important}
  .sr-home .sr-hero-thumb{transition:none!important}
 }
+
+
+/* Hero CTA V4.1 — three clear actions on desktop; car before actions on mobile. */
+.sr-home .sr-hero-actions .sr-quote-button{
+  font-family:"DM Sans",sans-serif;display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;min-height:48px;padding:13px 17px;
+  background:#17253b;color:#fff;border:1px solid #17253b;border-radius:999px;
+  font-weight:800;font-size:12px;line-height:1.2;white-space:nowrap;cursor:pointer;
+  box-shadow:0 6px 16px #11203b13;transition:background-color .15s ease,transform .15s ease;
+}
+.sr-home .sr-hero-actions .sr-quote-button:hover{
+  background:#34455d;transform:translateY(-1px);
+}
+.sr-home .sr-hero-actions .sr-quote-button:focus-visible{
+  outline:3px solid #ae855d;outline-offset:3px;
+}
+.sr-home .sr-hero-actions .sr-quote-button svg{width:17px;height:17px}
+.sr-home .sr-hero-actions{align-items:center!important;flex-wrap:wrap!important}
+@media(max-width:800px){
+  /* CSS display:contents moves the existing buttons below the slideshow without
+     cloning buttons or disturbing the desktop DOM / slideshow event listeners. */
+  .sr-home .sr-hero-layout{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+  .sr-home .sr-hero-copy{display:contents!important}
+  .sr-home .sr-hero-layout .sr-eyebrow{order:1;margin-top:23px}
+  .sr-home .sr-hero-layout .sr-hero-message{order:2;width:100%;min-width:0}
+  .sr-home .sr-hero-layout .sr-hero-media{order:3}
+  .sr-home .sr-hero-layout .sr-hero-actions{
+    order:4;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px!important;align-items:stretch!important;margin-top:14px!important;
+    width:100%;max-width:none;padding:0 0 0!important;
+  }
+  .sr-home .sr-hero-layout .sr-hero-actions .sr-button-dark,
+  .sr-home .sr-hero-layout .sr-hero-actions .sr-button-link{
+    display:inline-flex!important;width:100%;min-width:0;min-height:47px!important;
+    justify-content:center;align-items:center;gap:6px!important;white-space:nowrap;
+    font-size:11px!important;padding:10px 10px!important;margin:0!important;
+  }
+  .sr-home .sr-hero-layout .sr-hero-actions .sr-quote-button{
+    grid-column:1 / -1;width:100%;min-height:47px;border-radius:12px;
+    padding:12px 16px;font-size:12px;font-weight:800;box-shadow:0 6px 16px #14233c14;
+  }
+  .sr-home .sr-hero-layout .sr-hero-proof{
+    order:5;justify-content:center;margin-top:13px!important;padding:0 0 3px;
+  }
+  .sr-home .sr-search-holder{margin-top:17px!important}
+}
+@media(max-width:390px){
+  .sr-home .sr-hero-layout .sr-hero-actions .sr-button-dark,
+  .sr-home .sr-hero-layout .sr-hero-actions .sr-button-link{
+    font-size:10px!important;padding:9px 7px!important;gap:4px!important;
+  }
+  .sr-home .sr-hero-layout .sr-hero-actions .sr-button-dark svg,
+  .sr-home .sr-hero-layout .sr-hero-actions .sr-button-link svg{width:15px!important;height:15px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .sr-home .sr-hero-actions .sr-quote-button{transition:none}
+}
+
+/* Accessible quotation modal, sent by the visitor through WhatsApp. */
+body.sr-quote-open{overflow:hidden}
+.sr-quote-overlay{
+  position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;
+  padding:18px;isolation:isolate;font-family:"DM Sans",sans-serif;
+}
+.sr-quote-backdrop{position:absolute;inset:0;background:#0c1934af;z-index:-1}
+.sr-quote-dialog{
+  width:100%;max-width:520px;max-height:calc(100dvh - 36px);overflow-y:auto;
+  background:#fff;border:1px solid #e6e4df;box-shadow:0 26px 74px #09192a37;
+  border-radius:20px;color:#16263f;overscroll-behavior:contain;
+}
+.sr-quote-top{
+  padding:24px 25px 16px;display:flex;justify-content:space-between;gap:20px;
+  align-items:flex-start;border-bottom:1px solid #f1f0ee;
+}
+.sr-quote-eyebrow{display:block;font-size:9px;letter-spacing:.15em;color:#ab865e;font-weight:800}
+.sr-quote-top h2{font-family:Manrope,sans-serif;font-size:25px;line-height:1.2;letter-spacing:-.045em;margin:7px 0 6px;color:#15243c}
+.sr-quote-top p{font-size:12px;line-height:1.65;color:#7c8794;margin:0}
+.sr-quote-close{
+  display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;
+  border-radius:50%;background:#f3f3f2;color:#667384;font-size:23px;
+  border:0;cursor:pointer;line-height:1;
+}
+.sr-quote-form{padding:19px 25px 23px;display:flex;flex-direction:column;gap:14px}
+.sr-quote-form label{display:flex;flex-direction:column;gap:7px;font-size:11px;font-weight:750;color:#3c4a5d;min-width:0}
+.sr-quote-form input,.sr-quote-form select,.sr-quote-form textarea{
+  width:100%;max-width:none;min-height:44px;outline:0;
+  border:1px solid #dfe4e9;border-radius:10px;padding:10px 12px;
+  background:#fbfbfb;color:#1f3047;font-family:inherit;font-size:13px;line-height:1.4;
+  font-weight:500;box-shadow:none;
+}
+.sr-quote-form textarea{min-height:64px;resize:vertical}
+.sr-quote-form input:focus,.sr-quote-form textarea:focus,.sr-quote-form select:focus{border-color:#b08c68;outline:2px solid #b08c6824}
+.sr-quote-dates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sr-quote-disclaimer{font-size:10px;color:#7b8795;line-height:1.6;margin:0}
+.sr-quote-footer{display:grid;grid-template-columns:100px minmax(0,1fr);gap:10px}
+.sr-quote-footer button{cursor:pointer;font-weight:800;min-height:46px;padding:10px 14px;font-size:12px;font-family:inherit;border-radius:10px}
+.sr-quote-cancel{background:#fff;border:1px solid #e0e3e6;color:#4d5b6c}
+.sr-quote-submit{background:#17263d;color:#fff;border:1px solid #17263d}
+.sr-quote-submit:hover{background:#344258}
+.sr-quote-submit span{font-size:15px;margin-left:7px}
+.sr-quote-footer button:focus-visible,.sr-quote-close:focus-visible{outline:3px solid #b08c68;outline-offset:3px}
+@media(max-width:800px){
+  .sr-quote-overlay{align-items:flex-end;padding:0}
+  .sr-quote-dialog{
+    max-width:none;max-height:calc(100dvh - 18px);border-radius:20px 20px 0 0;
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .sr-quote-top{padding:22px 20px 16px}
+  .sr-quote-top h2{font-size:22px}
+  .sr-quote-form{padding:18px 20px 17px;gap:13px}
+  .sr-quote-dates{gap:8px}
+  .sr-quote-form input,.sr-quote-form select,.sr-quote-form textarea{font-size:16px}
+}
+@media(max-width:360px){
+  .sr-quote-dates{grid-template-columns:1fr}
+  .sr-quote-footer{grid-template-columns:88px minmax(0,1fr)}
+}
