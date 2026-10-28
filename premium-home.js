@@ -13,7 +13,7 @@ const showcaseCars=[
 ];
 const heroMessages=[
   {lead:"The Right Car.",accent:"For Every Journey.",detail:"Discover a car for every occasion, from everyday comfort to extraordinary drives."},
-  {lead:"Know the Cost.",accent:"Before You Commit.",detail:"Explore catalogue prices and confirm deposits, insurance and final rental terms with our team."},
+  {lead:"Know the Cost.",accent:"Before You Commit.",detail:"Review indicative prices and confirm deposits, insurance and final rental terms with our team."},
   {lead:"Choose with Confidence.",accent:"Drive with Peace of Mind.",detail:"Explore vehicle options, customer reviews and rental details before you enquire."},
   {lead:"Less Hassle.",accent:"More Time to Drive.",detail:"Find your car, choose your dates and request a quote in a few simple steps."},
   {lead:"Your Plans Matter.",accent:"So Do the Details.",detail:"Ask about pickup arrangements, rental requirements and extension options."}
