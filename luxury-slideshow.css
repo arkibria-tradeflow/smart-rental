@@ -15,7 +15,7 @@
 .sr-home .sr-lux-dots{display:flex;align-items:center;gap:3px;padding:8px 3px;max-width:192px;overflow:hidden}
 .sr-home .sr-lux-dot{appearance:none;display:block;border:0;border-radius:100px;padding:0;width:5px;height:5px;flex:0 0 5px;background:#d4d4d4;cursor:pointer;transition:background .25s ease,transform .25s ease}
 .sr-home .sr-lux-dot.is-active{background:#a9855f;transform:scale(1.38)}
-.sr-home .sr-lux-arrow{width:28px;height:28px;display:grid;place-items:center;background:#fff;color:#303e51;border:1px solid #e6e7e9;border-radius:50%;cursor:pointer;flex:0 0 28px;padding:0;transition:border-color .15s ease,background .15s ease}
+.sr-home .sr-lux-arrow{width:34px;height:34px;display:grid;place-items:center;background:#fff;color:#303e51;border:1px solid #e6e7e9;border-radius:50%;cursor:pointer;flex:0 0 34px;padding:0;transition:border-color .15s ease,background .15s ease}
 .sr-home .sr-lux-arrow:hover{border-color:#c8ab89;background:#f9f5ee}
 .sr-home .sr-lux-arrow:focus-visible,.sr-home .sr-lux-dot:focus-visible{outline:2px solid #ad8b68;outline-offset:3px}
 .sr-home .sr-lux-arrow svg{width:14px;height:14px}
@@ -30,14 +30,14 @@
  .sr-home .sr-lux-slider{touch-action:pan-y}
  .sr-home .sr-lux-track{height:210px}
  .sr-home .sr-lux-slide .sr-hero-car{max-height:192px;width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center;transform:none}
- .sr-home .sr-lux-controls{min-height:45px;gap:8px;padding:6px 9px;border-radius:11px}
+ .sr-home .sr-lux-controls{min-height:51px;gap:8px;padding:6px 9px;border-radius:11px}
  .sr-home .sr-lux-overline{font-size:7px}
  .sr-home .sr-lux-caption strong{font-size:10px}
  .sr-home .sr-lux-counter{font-size:9px;margin:0}
  .sr-home .sr-lux-dots{gap:2px;max-width:110px}
  .sr-home .sr-lux-dot{width:4px;height:4px;flex-basis:4px}
  .sr-home .sr-lux-navigation{gap:4px}
- .sr-home .sr-lux-arrow{height:27px;width:27px;flex-basis:27px}
+ .sr-home .sr-lux-arrow{height:36px;width:36px;flex-basis:36px}
  .sr-home .sr-lux-arrow svg{height:13px;width:13px}
 }
 @media(max-width:430px){
