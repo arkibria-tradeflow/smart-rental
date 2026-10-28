@@ -333,3 +333,76 @@ body.sr-quote-open{overflow:hidden}
   .sr-quote-dates{grid-template-columns:1fr}
   .sr-quote-footer{grid-template-columns:88px minmax(0,1fr)}
 }
+
+/* V4.2: reliable mobile DOM-order fix. Use separate action placements so the
+   vehicle ALWAYS precedes the mobile CTAs even if display:contents is unsupported. */
+.sr-home .sr-hero-layout > .sr-hero-actions-mobile,
+.sr-home .sr-hero-layout > .sr-hero-proof-mobile{display:none!important}
+@media(min-width:801px){
+ .sr-home .sr-hero-copy .sr-hero-actions-desktop{display:flex!important;gap:11px!important;flex-wrap:wrap!important}
+ .sr-home .sr-hero-copy .sr-hero-proof-desktop{display:flex!important}
+}
+@media(max-width:800px){
+ .sr-home .sr-hero-layout{
+   display:flex!important;flex-direction:column!important;
+   align-items:stretch!important;justify-content:flex-start!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-copy{
+   display:block!important;order:1!important;position:relative!important;
+   width:100%!important;padding:20px 0 3px!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-copy .sr-eyebrow{
+   display:flex!important;margin-top:0!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-copy .sr-hero-message{
+   min-height:0!important;max-width:100%!important;order:unset!important;
+   display:block!important;padding-top:12px!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-copy .sr-hero-message h1{
+   margin:0 0 12px!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-copy .sr-hero-actions-desktop,
+ .sr-home .sr-hero-layout > .sr-hero-copy .sr-hero-proof-desktop{
+   display:none!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-media{
+   display:flex!important;order:2!important;
+   margin:12px 0 0!important;width:100%!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-actions-mobile{
+   display:grid!important;order:3!important;
+   grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+   width:100%!important;min-width:0!important;
+   align-items:stretch!important;gap:9px!important;
+   margin:16px 0 0!important;padding:0!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-actions-mobile > .sr-button-dark,
+ .sr-home .sr-hero-layout > .sr-hero-actions-mobile > .sr-button-link{
+   width:100%!important;min-width:0!important;display:flex!important;
+   align-items:center!important;justify-content:center!important;
+   padding:11px 8px!important;margin:0!important;
+   font-size:clamp(10px,2.65vw,12px)!important;
+   line-height:1.15!important;min-height:48px!important;
+   border-radius:12px!important;white-space:nowrap!important;
+   box-shadow:none!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-actions-mobile > .sr-quote-button{
+   grid-column:1 / -1!important;
+   display:flex!important;width:100%!important;min-height:48px!important;
+   border-radius:12px!important;font-size:12px!important;
+   background:#17253b!important;color:white!important;
+ }
+ .sr-home .sr-hero-layout > .sr-hero-proof-mobile{
+   display:flex!important;order:4!important;width:100%!important;
+   justify-content:center!important;align-items:center!important;
+   gap:8px 12px!important;flex-wrap:wrap!important;
+   margin:15px 0 0!important;padding:0!important;
+ }
+ .sr-home .sr-search-holder{margin-top:19px!important}
+}
+@media(max-width:370px){
+ .sr-home .sr-hero-layout > .sr-hero-actions-mobile > .sr-button-dark,
+ .sr-home .sr-hero-layout > .sr-hero-actions-mobile > .sr-button-link{
+   gap:4px!important;padding:10px 6px!important;font-size:10px!important;
+ }
+}
