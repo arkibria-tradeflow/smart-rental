@@ -3,6 +3,13 @@
 "use strict";
 /* All higher-end listed vehicles (indicative catalogue figure >= AED 1,000). No price claims in slideshow. */
 const highlightIds=["rolls-royce-cullinan","lamborghini-urus","ferrari-f8","mercedes-g63","bentley-bentayga","mclaren-750s"];
+const heroMessages=[
+  {lead:"The Right Car.",accent:"For Every Journey.",detail:"From everyday drives to special occasions, explore cars that fit your plans and budget."},
+  {lead:"Know the Cost.",accent:"Before You Commit.",detail:"Browse indicative prices and ask our team to confirm deposits, insurance and any additional charges."},
+  {lead:"Choose with Confidence.",accent:"Drive with Peace of Mind.",detail:"Explore vehicle photos, customer reviews and rental information before making your decision."},
+  {lead:"Less Hassle.",accent:"More Time to Drive.",detail:"Choose a car, select your dates and explore your rental options in a few simple steps."},
+  {lead:"Your Plans Matter.",accent:"So Do the Details.",detail:"Ask about pickup, rental requirements and extension options before you set off."}
+];
 const luxuryCars=cars.filter(c=>Number.isFinite(c.rate)&&c.rate>=1000).sort((a,b)=>{
   const ai=highlightIds.indexOf(a.id),bi=highlightIds.indexOf(b.id);
   if(ai>=0&&bi>=0)return ai-bi;
@@ -12,7 +19,7 @@ const luxuryCars=cars.filter(c=>Number.isFinite(c.rate)&&c.rate>=1000).sort((a,b
 });
 function luxuryHero(){
  const slides=luxuryCars.map((c,i)=>
-  "<div class='sr-lux-slide"+(i===0?" is-active":"")+"' data-sr-slide='"+i+"' aria-hidden='"+(i===0?"false":"true")+"'>"+
+  "<div class='sr-lux-slide"+(i===0?" is-active":"")+"' data-sr-slide='"+i+"' data-sr-message='"+(i%heroMessages.length)+"' aria-hidden='"+(i===0?"false":"true")+"'>"+
    "<img class='sr-hero-car' "+(i===0?"src='":"data-src='")+"assets/"+esc(c.id)+".webp' alt='"+esc(c.name)+"' "+(i===0?"fetchpriority='high' loading='eager'":"loading='lazy'")+" decoding='async'></div>"
  ).join("");
  const dots=luxuryCars.map((c,i)=>
@@ -59,7 +66,7 @@ return "<button class='sr-brand-card' data-brand-filter='"+esc(b[0])+"' aria-lab
 }).join("");
 return "<main class='sr-home'>"+
 "<section class='sr-hero'><div class='container sr-hero-layout'><div class='sr-hero-copy'><span class='sr-eyebrow'><i></i> CAR RENTAL IN "+esc(CFG.city.toUpperCase())+"</span>"+
-"<h1>Every journey starts with <em>the right car.</em></h1><p>From easy city drives to something extraordinary. Find the car that fits your plans.</p>"+
+"<div class='sr-hero-message'><h1 data-sr-hero-title><span data-sr-hero-lead>"+esc(heroMessages[0].lead)+"</span> <em data-sr-hero-accent>"+esc(heroMessages[0].accent)+"</em></h1><p data-sr-hero-description>"+esc(heroMessages[0].detail)+"</p></div>"+
 "<div class='sr-hero-actions'><button class='sr-button-dark' type='button' data-action='browse'>Explore our cars "+icon("arrow",17)+"</button>"+
 "<a class='sr-button-link' href='https://wa.me/"+PHONE+"' target='_blank' rel='noopener noreferrer'>"+icon("message",17)+" Chat on WhatsApp</a></div></div>"+
 "<div class='sr-hero-media'><div class='sr-hero-glow'></div>"+luxuryHero()+"</div></div>"+
