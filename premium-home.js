@@ -25,7 +25,7 @@ function luxuryHero(){
  const dots=luxuryCars.map((c,i)=>
   "<button type='button' class='sr-lux-dot"+(i===0?" is-active":"")+"' data-sr-go='"+i+"' aria-label='Show "+esc(c.name)+"' aria-pressed='"+(i===0?"true":"false")+"'></button>"
  ).join("");
- return "<div class='sr-lux-slider' id='sr-luxury-slideshow' aria-label='Featured luxury rental cars'>"+
+ return "<div class='sr-lux-slider' id='sr-luxury-slideshow' aria-label='Featured luxury rental cars' data-sr-messages='"+esc(JSON.stringify(heroMessages))+"'>"+
   "<div class='sr-lux-track'>"+slides+"</div>"+
   "<div class='sr-lux-controls'>"+
    "<div class='sr-lux-caption'><span class='sr-lux-overline'>FEATURED COLLECTION</span><strong data-sr-lux-name>"+esc(luxuryCars[0]?.name||"Luxury cars")+"</strong></div>"+
