@@ -12,6 +12,7 @@ function stamp(s){
 }
 function days(a,b){const x=stamp(a),y=stamp(b);return x===null||y===null?0:Math.round((y-x)/D);}
 function money(v){return CFG.currency+" "+Math.round(v).toLocaleString("en-AE");}
+function rateMoney(v){return CFG.currency+" "+Number(v).toLocaleString("en-AE",{minimumFractionDigits:Number.isInteger(v)?0:2,maximumFractionDigits:2});}
 function math(car){
  const period=plans[ui.period]?ui.period:"Daily",plan=plans[period];
  const daysCount=days(selection.pickup,selection.returnDate);
@@ -21,7 +22,8 @@ function math(car){
  const unit=car.rate!=null&&Number.isFinite(car.rate)?car.rate:null;
  const gross=valid&&unit!==null?unit*daysCount:null;
  const saved=gross===null?null:gross*plan.off;
- return {period,plan,daysCount,both,datesValid,valid,unit,gross,saved,total:gross===null?null:gross-saved};
+ const planUnit=unit===null?null:unit*(1-plan.off);
+ return {period,plan,daysCount,both,datesValid,valid,unit,planUnit,gross,saved,total:gross===null?null:gross-saved};
 }
 function datesTimeline(){
  const start=stamp(dateISO());
@@ -36,12 +38,6 @@ function datesTimeline(){
    "' aria-pressed='"+String(pickup||ret)+"' aria-label='"+name+" "+value+"'><span>"+name+"</span><strong>"+dt.getUTCDate()+"</strong></button>";
  }).join("")+"</div>";
 }
-function adjustPlan(){
-  const n=days(selection.pickup,selection.returnDate);
-  if(n>=30)ui.period="Monthly";
-  else if(n>=7)ui.period="Weekly";
-  else if(n>0)ui.period="Daily";
-}
 function field(key,label){
  return "<label class='sr-vdetail-date-field'><span>"+label+"</span><input type='date' data-sr-date='"+key+
  "' min='"+dateISO()+"' value='"+esc(selection[key])+"' aria-label='"+label+"'></label>";
@@ -55,14 +51,20 @@ function detailV2(){
  const other=cars.filter(x=>x.category===c.category&&x.id!==c.id).slice(0,5);
  const message=!p.both?"Select your dates to get your rental estimate.":
  !p.datesValid?"Choose a future pick-up date and a later return date.":
- p.daysCount<p.plan.min?p.period+" plan requires at least "+p.plan.min+" rental days.":"You can now request a quotation for these dates.";
+ p.daysCount<p.plan.min?p.period+" requires at least "+p.plan.min+" days. Adjust your dates or choose another plan.":"Ready to ask the rental team to check availability and provide a quote.";
  const photos="<img src='"+esc(c.photo)+"' alt='"+esc(c.name)+"' loading='eager' decoding='async' onerror=\"this.hidden=true\">";
  const related=other.map(o=>"<button type='button' data-action='details' data-id='"+esc(o.id)+"' class='sr-vdetail-related-card'>"+
   "<span class='sr-vdetail-related-photo'>"+carImg(o)+"</span><strong>"+esc(o.name)+"</strong>"+
   "<small>"+(o.rate===null?"Rate on request":money(o.rate))+"</small></button>").join("");
- const periodButtons=["Daily","Weekly","Monthly"].map(k=>"<button type='button' data-action='period' data-period='"+k+
-  "' class='sr-vdetail-period"+(p.period===k?" is-selected":"")+"' aria-pressed='"+String(p.period===k)+"'>"+
-  "<strong>"+k+"</strong><small>"+(k==="Daily"?"Standard":"−"+Math.round(plans[k].off*100)+"%")+"</small></button>").join("");
+ const periodButtons=["Daily","Weekly","Monthly"].map(k=>{
+ const discount=plans[k].off;
+ const rate=p.unit===null?"Ask for rate":rateMoney(p.unit*(1-discount));
+ return "<button type='button' data-action='period' data-period='"+k+
+  "' class='sr-vdetail-period"+(p.period===k?" is-selected":"")+"' aria-pressed='"+String(p.period===k)+
+  "' aria-label='"+k+" rental, "+Math.round(discount*100)+" percent discount, "+rate+" per day'>"+
+  "<strong>"+k+"</strong><small>"+(discount?"−"+Math.round(discount*100)+"%":"Regular")+"</small>"+
+  "<span class='sr-vdetail-tab-price'>"+esc(rate)+"<i>/day</i></span></button>";
+ }).join("");
  const breakdown=p.valid&&p.total!==null?
   "<div class='sr-vdetail-estimate-line'><span>Estimated saving</span><b>"+money(p.saved)+"</b></div>"+
   "<div class='sr-vdetail-estimate-total'><span>Estimated rental total</span><strong>"+money(p.total)+"</strong></div>":
@@ -75,10 +77,14 @@ function detailV2(){
     "<figure class='sr-vdetail-gallery'><div class='sr-vdetail-photo'>"+photos+"</div>"+
       "<figcaption>Vehicle image for reference · Please confirm the exact specification</figcaption></figure></div>"+
   "<div class='sr-vdetail-details-col'>"+
-    "<section class='sr-vdetail-rate sr-vdetail-rate-compact'><div class='sr-vdetail-rate-compact-main'><span>Listed price<small>For estimation only</small></span><strong>"+(p.unit===null?"Ask for price":money(p.unit))+"</strong></div></section>"+
+    "<section class='sr-vdetail-rate sr-vdetail-rate-compact' aria-label='Selected rental rate'>"+
+      "<div class='sr-vdetail-rate-compact-main'><span>"+esc(p.period)+" rate <small>"+(p.plan.off?Math.round(p.plan.off*100)+"% off the daily reference":"Daily reference price")+"</small></span>"+
+      "<strong>"+(p.planUnit===null?"Ask for rate":rateMoney(p.planUnit))+" <em>/day</em></strong></div>"+
+      (p.plan.off&&p.unit!==null?"<div class='sr-vdetail-rate-compare'>Daily reference: "+rateMoney(p.unit)+" /day</div>":"")+
+    "</section>"+
     "<section class='sr-vdetail-options'><div class='sr-vdetail-section-title'><h2>Rental plan</h2><span>Select a plan</span></div>"+
       "<div class='sr-vdetail-periods' role='group' aria-label='Rental plan'>"+periodButtons+"</div>"+
-      "<p class='sr-vdetail-period-note'>10% off for 7+ days · 15% off for 30+ days. Discounts subject to confirmation.</p></section>"+
+      "<p class='sr-vdetail-period-note'>Weekly is 10% below the Daily rate (7+ days). Monthly is 15% below Daily (30+ days). Estimates subject to confirmation.</p></section>"+
     "<section class='sr-vdetail-dates' aria-label='Select rental dates'>"+
       "<div class='sr-vdetail-section-title'><h2>Select rental dates</h2><span>Pick-up → Return</span></div>"+
       "<div class='sr-vdetail-date-fields'>"+field("pickup","Pick-up date")+field("returnDate","Return date")+"</div>"+
@@ -100,7 +106,7 @@ function detailV2(){
     "' data-return-date='"+esc(selection.returnDate)+"'"+
     (p.valid&&p.total!==null?" data-estimate='"+esc(money(p.total))+"'":"")+
     (!p.valid?" disabled aria-disabled='true' title='Select valid dates and duration first'":"")+
-    ">"+(p.valid?(p.total!==null?"Get Quote · "+money(p.total):"Request a Quote"):"Select Rental Dates")+" "+icon("arrow",18)+"</button>"+
+    ">Check Availability &amp; Get Quote "+icon("arrow",18)+"</button>"+
     "<button type='button' class='sr-vdetail-cta-whatsapp' data-sr-whatsapp-detail data-id='"+esc(c.id)+"' data-model='"+esc(c.name)+
     "' data-pickup='"+esc(selection.pickup)+"' data-return-date='"+esc(selection.returnDate)+"' data-period='"+p.period+"'"+
     (p.valid&&p.total!==null?" data-estimate='"+esc(money(p.total))+"'":"")+">"+
@@ -120,7 +126,6 @@ document.addEventListener("click",function(e){
    if(value<=selection.pickup){selection.pickup=value;selection.returnDate="";selection.phase="return";}
    else{selection.returnDate=value;selection.phase="pickup";}
   }
-  adjustPlan();
   render(false);return;
  }
  if(e.target.closest("[data-sr-clear-dates]")&&ui.page==="detail"){
@@ -132,7 +137,6 @@ document.addEventListener("change",function(e){
  if(!el||ui.page!=="detail")return;
  selection[el.dataset.srDate]=el.value;
  selection.phase=el.dataset.srDate==="pickup"?"return":"pickup";
- adjustPlan();
  render(false);
 });
 document.addEventListener("click",function(e){
