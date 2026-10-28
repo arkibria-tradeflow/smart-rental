@@ -50,6 +50,13 @@ function openModal(){
     '</section>'
   ].join("");
   document.body.appendChild(modal);
+  // Reuse the visitor's selected homepage search dates when available.
+  const pickup=document.querySelector("#pickup")?.value||"";
+  const returnDate=document.querySelector("#returnDate")?.value||"";
+  const quotePickup=modal.querySelector('[name="pickup"]');
+  const quoteReturn=modal.querySelector('[name="returnDate"]');
+  if(quotePickup)quotePickup.value=pickup;
+  if(quoteReturn)quoteReturn.value=returnDate;
   document.body.classList.add("sr-quote-open");
   modal.querySelector(".sr-quote-close")?.focus({preventScroll:true});
 }
