@@ -47,7 +47,7 @@ function detailV2(){
  }
  const p=math(c);
  const other=cars.filter(x=>x.category===c.category&&x.id!==c.id).slice(0,5);
- const message=!p.both?"Select your pick-up and return dates to enable quotation.":
+ const message=!p.both?"Select your dates to get your rental estimate.":
  !p.datesValid?"Choose a future pick-up date and a later return date.":
  p.daysCount<p.plan.min?p.period+" plan requires at least "+p.plan.min+" rental days.":"You can now request a quotation for these dates.";
  const photos="<img src='"+esc(c.photo)+"' alt='"+esc(c.name)+"' loading='eager' decoding='async' onerror=\"this.hidden=true\">";
@@ -69,22 +69,20 @@ function detailV2(){
     "<figure class='sr-vdetail-gallery'><div class='sr-vdetail-photo'>"+photos+"</div>"+
       "<figcaption>Vehicle image for reference · Please confirm the exact specification</figcaption></figure></div>"+
   "<div class='sr-vdetail-details-col'>"+
-    "<section class='sr-vdetail-rate'><div class='sr-vdetail-rate-heading'><span>INDICATIVE PRICE</span><span class='sr-vdetail-rate-notice'>Estimate only</span></div>"+
-    "<div class='sr-vdetail-rate-main'><strong>"+(p.unit===null?"Rate on request":money(p.unit))+"</strong>"+
-    "<small>"+(p.unit===null?"Contact the rental team for the rate":"Assumed daily reference — not a confirmed daily rental rate")+"</small></div></section>"+
+    "<section class='sr-vdetail-rate sr-vdetail-rate-compact'><div class='sr-vdetail-rate-compact-main'><span>Listed price<small>For estimation only</small></span><strong>"+(p.unit===null?"Ask for price":money(p.unit))+"</strong></div></section>"+
     "<section class='sr-vdetail-options'><div class='sr-vdetail-section-title'><h2>Rental plan</h2><span>Select a plan</span></div>"+
       "<div class='sr-vdetail-periods' role='group' aria-label='Rental plan'>"+periodButtons+"</div>"+
-      "<p class='sr-vdetail-period-note'>Weekly 7+ days: −10% · Monthly 30+ days: −15%. Discounts are proposed and subject to confirmation.</p></section>"+
+      "<p class='sr-vdetail-period-note'>10% off for 7+ days · 15% off for 30+ days. Discounts subject to confirmation.</p></section>"+
     "<section class='sr-vdetail-dates' aria-label='Select rental dates'>"+
       "<div class='sr-vdetail-section-title'><h2>Select rental dates</h2><span>Pick-up → Return</span></div>"+
       "<div class='sr-vdetail-date-fields'>"+field("pickup","Pick-up date")+field("returnDate","Return date")+"</div>"+
-      "<div class='sr-vdetail-date-select'><span>Quick dates: select "+(selection.phase==="pickup"?"pick-up":"return")+"</span>"+
+      "<div class='sr-vdetail-date-select'><span>Tap a date to select "+(selection.phase==="pickup"?"pick-up":"return")+"</span>"+
       "<button type='button' data-sr-clear-dates>Clear</button></div>"+
-      datesTimeline()+"<p class='sr-vdetail-help'>For later dates, use the calendar fields above.</p></section>"+
-    "<section class='sr-vdetail-estimate' aria-label='Rental estimate' aria-live='polite'>"+
-      "<div class='sr-vdetail-estimate-line'><span>Selected duration</span><b>"+(p.datesValid?p.daysCount+" days":"Select dates")+"</b></div>"+
-      "<div class='sr-vdetail-estimate-line'><span>"+p.period+" discount</span><b>"+Math.round(p.plan.off*100)+"%</b></div>"+
-      breakdown+"<p>Illustrative estimate based on an unverified daily figure. Deposit, VAT, insurance, mileage and other charges are excluded. Final rates require team confirmation.</p></section>"+
+      datesTimeline()+"</section>"+
+    "<section class='sr-vdetail-estimate sr-vdetail-estimate-compact' aria-label='Rental estimate' aria-live='polite'>"+
+      "<div class='sr-vdetail-estimate-top'><span>"+(p.datesValid?p.daysCount+" day"+(p.daysCount===1?"":"s")+" · "+p.period:"Rental estimate")+"</span><small>"+(p.plan.off?Math.round(p.plan.off*100)+"% saving":"Standard rate")+"</small></div>"+
+      "<div class='sr-vdetail-estimate-total'><span>Estimated total</span><strong>"+(p.valid?(p.total!==null?money(p.total):"On request"):"—")+"</strong></div>"+
+      "<p>Estimate only. Listed amounts are assumed daily references; discounts and final charges require confirmation.</p></section>"+
     "<p class='sr-vdetail-date-feedback"+(p.both&&!p.valid?" is-error":"")+"' aria-live='polite'>"+esc(message)+"</p>"+
   "</div></div>"+
   "<div class='sr-vdetail-disclosure'>"+icon("shield",17)+"<span>No automatic booking or payment. Availability and final terms are confirmed by the rental team.</span></div>"+
@@ -96,9 +94,11 @@ function detailV2(){
     "' data-return-date='"+esc(selection.returnDate)+"'"+
     (p.valid&&p.total!==null?" data-estimate='"+esc(money(p.total))+"'":"")+
     (!p.valid?" disabled aria-disabled='true' title='Select valid dates and duration first'":"")+
-    ">Request a Quote "+icon("arrow",18)+"</button>"+
-    "<button type='button' class='sr-vdetail-cta-whatsapp' data-action='whatsapp' data-id='"+esc(c.id)+"'>"+
-      icon("message",20)+"<span>WhatsApp</span></button></div></main>";
+    ">"+(p.valid?(p.total!==null?"Get Quote · "+money(p.total):"Request a Quote"):"Select Rental Dates")+" "+icon("arrow",18)+"</button>"+
+    "<button type='button' class='sr-vdetail-cta-whatsapp' data-sr-whatsapp-detail data-id='"+esc(c.id)+"' data-model='"+esc(c.name)+
+    "' data-pickup='"+esc(selection.pickup)+"' data-return-date='"+esc(selection.returnDate)+"' data-period='"+p.period+"'"+
+    (p.valid&&p.total!==null?" data-estimate='"+esc(money(p.total))+"'":"")+">"+
+      icon("message",20)+"<span>"+(p.datesValid?"Send Dates":"WhatsApp")+"</span></button></div></main>";
 }
 detail=detailV2;
 document.addEventListener("click",function(e){
