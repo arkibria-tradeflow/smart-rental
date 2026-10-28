@@ -1,0 +1,52 @@
+/* Elegant progressive hero slideshow, isolated to Smart Rental homepage. */
+.sr-home .sr-hero-media{overflow:visible;isolation:isolate}
+.sr-home .sr-hero-glow{pointer-events:none}
+.sr-home .sr-lux-slider{position:absolute;inset:0;display:flex;flex-direction:column;isolation:isolate;min-width:0}
+.sr-home .sr-lux-track{position:relative;flex:1;min-height:0;width:100%}
+.sr-home .sr-lux-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transform:translate3d(18px,0,0) scale(1.012);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1),visibility 0s .8s;pointer-events:none}
+.sr-home .sr-lux-slide.is-active{opacity:1;visibility:visible;transform:translate3d(0,0,0) scale(1);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1),visibility 0s 0s}
+.sr-home .sr-lux-slide .sr-hero-car{display:block;position:relative;max-width:100%;width:109%;max-height:350px;height:100%;object-fit:contain;object-position:center;transform:none;filter:none;mix-blend-mode:multiply}
+.sr-home .sr-lux-controls{flex:0 0 auto;position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:7px 5px 7px 16px;min-height:52px;border:1px solid #e7e4df;border-radius:12px;background:rgba(255,255,255,.87);backdrop-filter:blur(12px);box-shadow:0 5px 26px #1524380a}
+.sr-home .sr-lux-caption{display:flex;flex-direction:column;gap:4px;min-width:0}
+.sr-home .sr-lux-overline{color:#a5896d;font-size:8px;font-weight:800;letter-spacing:.13em}
+.sr-home .sr-lux-caption strong{font-family:Manrope,sans-serif;font-size:12px;line-height:1.3;font-weight:800;letter-spacing:-.015em;color:#1d2a3b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-home .sr-lux-navigation{display:flex;align-items:center;gap:7px;flex:0 0 auto}
+.sr-home .sr-lux-counter{font-size:10px;color:#888e97;font-weight:750;white-space:nowrap;font-variant-numeric:tabular-nums;margin-right:4px}
+.sr-home .sr-lux-dots{display:flex;align-items:center;gap:3px;padding:8px 3px;max-width:192px;overflow:hidden}
+.sr-home .sr-lux-dot{appearance:none;display:block;border:0;border-radius:100px;padding:0;width:5px;height:5px;flex:0 0 5px;background:#d4d4d4;cursor:pointer;transition:background .25s ease,transform .25s ease}
+.sr-home .sr-lux-dot.is-active{background:#a9855f;transform:scale(1.38)}
+.sr-home .sr-lux-arrow{width:28px;height:28px;display:grid;place-items:center;background:#fff;color:#303e51;border:1px solid #e6e7e9;border-radius:50%;cursor:pointer;flex:0 0 28px;padding:0;transition:border-color .15s ease,background .15s ease}
+.sr-home .sr-lux-arrow:hover{border-color:#c8ab89;background:#f9f5ee}
+.sr-home .sr-lux-arrow:focus-visible,.sr-home .sr-lux-dot:focus-visible{outline:2px solid #ad8b68;outline-offset:3px}
+.sr-home .sr-lux-arrow svg{width:14px;height:14px}
+@media(max-width:1100px){
+ .sr-home .sr-lux-slide .sr-hero-car{max-height:280px}
+ .sr-home .sr-lux-dots{max-width:140px;gap:2px}
+ .sr-home .sr-lux-dot{width:4px;height:4px;flex-basis:4px}
+ .sr-home .sr-lux-navigation{gap:5px}
+}
+@media(max-width:800px){
+ .sr-home .sr-hero-media{height:270px;min-height:0;overflow:visible}
+ .sr-home .sr-lux-slider{touch-action:pan-y}
+ .sr-home .sr-lux-track{height:210px}
+ .sr-home .sr-lux-slide .sr-hero-car{max-height:192px;width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center;transform:none}
+ .sr-home .sr-lux-controls{min-height:45px;gap:8px;padding:6px 9px;border-radius:11px}
+ .sr-home .sr-lux-overline{font-size:7px}
+ .sr-home .sr-lux-caption strong{font-size:10px}
+ .sr-home .sr-lux-counter{font-size:9px;margin:0}
+ .sr-home .sr-lux-dots{gap:2px;max-width:110px}
+ .sr-home .sr-lux-dot{width:4px;height:4px;flex-basis:4px}
+ .sr-home .sr-lux-navigation{gap:4px}
+ .sr-home .sr-lux-arrow{height:27px;width:27px;flex-basis:27px}
+ .sr-home .sr-lux-arrow svg{height:13px;width:13px}
+}
+@media(max-width:430px){
+ .sr-home .sr-hero-media{height:255px}
+ .sr-home .sr-lux-slide .sr-hero-car{max-height:170px}
+ .sr-home .sr-lux-dots{display:none}
+ .sr-home .sr-lux-counter{font-size:10px;margin-right:4px}
+}
+@media(prefers-reduced-motion:reduce){
+ .sr-home .sr-lux-slide,.sr-home .sr-lux-slide.is-active{transition:none!important;transform:none!important}
+ .sr-home .sr-lux-dot{transition:none!important}
+}
