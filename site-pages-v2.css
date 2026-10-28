@@ -1,0 +1,84 @@
+/* Customer-facing About + compact responsive footer */
+.sr-about-main{background:#fff;color:#17273d;overflow:hidden;font-family:"DM Sans",system-ui,sans-serif}
+.sr-about-intro{display:grid;grid-template-columns:1fr .9fr;gap:35px;align-items:center;min-height:360px;padding-top:65px;padding-bottom:60px}
+.sr-about-eyebrow{font-size:10px;letter-spacing:.16em;color:#a58661;font-weight:850}
+.sr-about-intro h1{font-family:Manrope,sans-serif;font-size:clamp(36px,4vw,56px);line-height:1.14;letter-spacing:-.065em;color:#15253b;margin:14px 0 17px;font-weight:850}
+.sr-about-intro h1 em{font-style:normal;color:#ab875f}
+.sr-about-lead>p{font-size:13px;line-height:1.8;max-width:490px;color:#718094;margin:0}
+.sr-about-actions{display:flex;gap:10px;margin-top:23px;flex-wrap:wrap}
+.sr-about-actions a{min-height:45px;padding:12px 19px;display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:12px;font-size:12px;font-weight:800}
+.sr-about-primary{background:#17273d;color:white!important}
+.sr-about-secondary{background:white;border:1px solid #e4e5e6;color:#263953!important}
+.sr-about-secondary svg{color:#26815d}
+.sr-about-visual{height:275px;display:flex;align-items:center;justify-content:center;background:#fafaf9;border-radius:18px}
+.sr-about-visual img{max-width:100%;width:100%;max-height:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;padding:16px}
+.sr-about-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding-bottom:65px}
+.sr-about-benefits>div{border:1px solid #e9ebee;border-radius:15px;padding:20px;background:#fff}
+.sr-about-benefits>div>span{display:grid;place-items:center;width:39px;height:39px;border-radius:11px;background:#f8f4ef;color:#ac855d;margin-bottom:17px}
+.sr-about-benefits strong{display:block;font-family:Manrope,sans-serif;color:#1c2b40;font-size:14px;margin-bottom:8px}
+.sr-about-benefits p{font-size:12px;line-height:1.7;color:#8b95a2;margin:0}
+.sr-about-visit{padding-bottom:75px}
+.sr-about-visit-header{margin-bottom:23px}
+.sr-about-visit-header h2{font-family:Manrope,sans-serif;font-size:clamp(27px,3vw,38px);letter-spacing:-.055em;margin:8px 0;color:#17263f}
+.sr-about-visit-header p{font-size:12px;color:#8793a1;margin:0}
+.sr-about-visit-layout{display:grid;grid-template-columns:.88fr 1.12fr;gap:14px}
+.sr-about-address{background:#faf9f7;border:1px solid #ede9e2;border-radius:15px;padding:26px;display:flex;flex-direction:column;gap:13px}
+.sr-about-address h3{font-family:Manrope,sans-serif;font-size:17px;font-weight:850;margin:0;color:#1d2c41}
+.sr-about-address p{display:flex;align-items:flex-start;gap:9px;margin:0;color:#677588;font-size:12px;line-height:1.7}
+.sr-about-address p svg{flex:0 0 18px;color:#ad865e;margin-top:2px}
+.sr-about-visit-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px}
+.sr-about-visit-links a{display:inline-flex;align-items:center;gap:7px;background:#17283f;color:#fff;padding:11px 14px;border-radius:10px;font-weight:800;font-size:11px;min-height:41px}
+.sr-about-visit-links a+a{background:white;border:1px solid #dedfdc;color:#38465a}
+.sr-about-address small{font-size:10px;color:#9ca4ae;line-height:1.6;margin-top:auto}
+.sr-about-map{min-height:260px;border-radius:15px;overflow:hidden;border:1px solid #eceef0;background:#f4f5f6}
+.sr-about-map iframe{display:block;width:100%;height:100%;min-height:260px;border:0}
+/* Footer is a single compact component independent from old .sr-footer rules. */
+.sr-footer-v2{background:#132137;color:#dce2e9;padding:34px 0 15px;font-family:"DM Sans",system-ui,sans-serif}
+.sr-footer-v2-main{display:grid;grid-template-columns:1.65fr .7fr .85fr 1.1fr;gap:24px}
+.sr-footer-v2 .sr-footer-v2-brand .brand{width:146px!important;height:55px!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#fff;border-radius:8px;overflow:hidden;padding:2px}
+.sr-footer-v2 .sr-footer-v2-brand .brand-mark{width:142px!important;height:53px!important;flex:0 0 142px!important;background:#fff!important;border:0!important;border-radius:0!important;display:flex!important;align-items:center;justify-content:center}
+.sr-footer-v2 .sr-footer-v2-brand .brand-mark img{width:142px!important;height:53px!important;object-fit:contain;transform:scale(1.24);mix-blend-mode:multiply}
+.sr-footer-v2 .sr-footer-v2-brand .brand-mark:after{display:none}
+.sr-footer-v2 .sr-footer-v2-brand .brand-text{display:none!important}
+.sr-footer-v2-brand>p{font-size:11px;line-height:1.65;color:#a8b4c3;max-width:260px;margin:13px 0 11px}
+.sr-footer-v2-whatsapp{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:#f2e5d3;font-weight:800}
+.sr-footer-v2-whatsapp svg{color:#c5a275}
+.sr-footer-v2-links,.sr-footer-v2-contact{display:flex;flex-direction:column;gap:10px;min-width:0}
+.sr-footer-v2-links strong,.sr-footer-v2-contact strong{font-size:12px;color:#fff;margin:3px 0 5px;font-weight:800}
+.sr-footer-v2-links a,.sr-footer-v2-contact a,.sr-footer-v2-contact span{color:#b3bfcc;font-size:11px;line-height:1.55}
+.sr-footer-v2-contact a,.sr-footer-v2-contact span{display:flex;align-items:flex-start;gap:7px}
+.sr-footer-v2-contact svg{flex:0 0 15px;color:#c2a078;margin-top:2px}
+.sr-footer-v2-links a:hover,.sr-footer-v2-contact a:hover{color:#fff}
+.sr-footer-v2-bottom{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #314053;padding-top:13px;margin-top:28px;color:#8495aa;font-size:10px;line-height:1.5}
+.sr-about-main a:focus-visible,.sr-footer-v2 a:focus-visible{outline:3px solid #b6946f;outline-offset:3px}
+@media(max-width:800px){
+ .sr-about-intro{display:flex;flex-direction:column;align-items:stretch;gap:10px;min-height:0;padding-top:27px;padding-bottom:25px}
+ .sr-about-intro h1{font-size:clamp(30px,7.5vw,40px);margin:11px 0}
+ .sr-about-lead>p{font-size:12px;line-height:1.72}
+ .sr-about-visual{height:203px;margin-top:11px}
+ .sr-about-visual img{padding:8px}
+ .sr-about-actions{margin-top:17px}
+ .sr-about-actions a{padding:11px 16px;min-height:44px;font-size:11px}
+ .sr-about-benefits{grid-template-columns:1fr;gap:9px;padding-bottom:38px}
+ .sr-about-benefits>div{display:grid;grid-template-columns:38px 1fr;align-items:center;column-gap:12px;padding:14px}
+ .sr-about-benefits>div>span{grid-row:1/3;margin:0}
+ .sr-about-benefits strong{font-size:13px;margin:0}
+ .sr-about-benefits p{font-size:11px;margin:2px 0 0}
+ .sr-about-visit{padding-bottom:44px}
+ .sr-about-visit-header h2{font-size:27px}
+ .sr-about-visit-layout{grid-template-columns:1fr;gap:10px}
+ .sr-about-address{padding:20px;gap:10px}
+ .sr-about-map,.sr-about-map iframe{min-height:215px;height:215px}
+ .sr-footer-v2{padding:23px 0 calc(93px + env(safe-area-inset-bottom,0px))}
+ .sr-footer-v2-main{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 15px}
+ .sr-footer-v2-brand{grid-column:1/-1}
+ .sr-footer-v2 .sr-footer-v2-brand .brand{width:125px!important;height:49px!important}
+ .sr-footer-v2 .sr-footer-v2-brand .brand-mark{width:121px!important;height:47px!important;flex-basis:121px!important}
+ .sr-footer-v2 .sr-footer-v2-brand .brand-mark img{width:121px!important;height:47px!important}
+ .sr-footer-v2-brand>p{max-width:400px;margin:9px 0 8px}
+ .sr-footer-v2-links strong,.sr-footer-v2-contact strong{font-size:11px;margin:0 0 2px}
+ .sr-footer-v2-links{gap:8px}
+ .sr-footer-v2-contact{grid-column:1/-1;gap:8px;border-top:1px solid #304054;padding-top:12px}
+ .sr-footer-v2-contact span{max-width:100%;font-size:10px}
+ .sr-footer-v2-bottom{flex-direction:column;margin-top:13px;padding-top:12px;gap:2px;font-size:9px}
+}
