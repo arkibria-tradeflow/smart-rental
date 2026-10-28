@@ -141,3 +141,47 @@
 @media(prefers-reduced-motion:reduce){
  .sr-vdetail-v2 .sr-vdetail-cta-bar{transition:none!important}
 }
+
+
+/* V3.1: individual rental tabs each show a rate derived from Daily. */
+.sr-vdetail-v2 .sr-vdetail-periods{gap:5px!important;padding:4px!important}
+.sr-vdetail-v2 .sr-vdetail-period{
+  display:flex!important;flex-direction:column!important;gap:3px!important;
+  min-width:0!important;min-height:65px!important;
+  padding:8px 3px!important;border-radius:10px!important
+}
+.sr-vdetail-v2 .sr-vdetail-period strong{font-size:12px!important;line-height:1.15!important}
+.sr-vdetail-v2 .sr-vdetail-period small{font-size:10px!important;font-weight:800!important;line-height:1.15}
+.sr-vdetail-v2 .sr-vdetail-tab-price{
+  display:block;width:100%;min-width:0;
+  font-size:clamp(9px,2.55vw,11px);line-height:1.2;font-weight:850;
+  white-space:nowrap;letter-spacing:-.015em;
+}
+.sr-vdetail-v2 .sr-vdetail-tab-price i{font-style:normal;font-size:8px;font-weight:650;opacity:.8}
+.sr-vdetail-v2 .sr-vdetail-rate-compact-main strong{
+  font-size:clamp(20px,5.9vw,27px)!important;letter-spacing:-.05em;
+}
+.sr-vdetail-v2 .sr-vdetail-rate-compact-main strong em{
+  font-size:11px;letter-spacing:0;font-weight:700;font-style:normal;color:#7d8a99;
+}
+.sr-vdetail-v2 .sr-vdetail-rate-compare{
+  font-size:10px;color:#768497;margin-top:5px;
+}
+.sr-vdetail-v2 .sr-vdetail-cta-primary{
+  white-space:normal!important;line-height:1.2!important;text-align:center!important;
+}
+@media(max-width:900px){
+  .sr-vdetail-v2 .sr-vdetail-period{min-height:67px!important}
+  .sr-vdetail-v2 .sr-vdetail-cta-primary{
+    font-size:clamp(10px,2.85vw,12px)!important;
+    min-height:48px!important;gap:5px!important;
+  }
+  .sr-vdetail-v2 .sr-vdetail-cta-whatsapp{
+    min-height:48px!important;
+  }
+}
+@media(max-width:365px){
+  .sr-vdetail-v2 .sr-vdetail-period strong{font-size:11px!important}
+  .sr-vdetail-v2 .sr-vdetail-tab-price{font-size:9px!important}
+  .sr-vdetail-v2 .sr-vdetail-cta-whatsapp{min-width:88px!important}
+}
