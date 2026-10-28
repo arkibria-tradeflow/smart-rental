@@ -51,8 +51,8 @@ function openModal(trigger){
   ].join("");
   document.body.appendChild(modal);
   // Reuse the visitor's selected homepage search dates when available.
-  const pickup=document.querySelector("#pickup")?.value||"";
-  const returnDate=document.querySelector("#returnDate")?.value||"";
+  const pickup=String(trigger?.dataset.pickup||document.querySelector("#pickup")?.value||"");
+  const returnDate=String(trigger?.dataset.returnDate||document.querySelector("#returnDate")?.value||"");
   const quotePickup=modal.querySelector('[name="pickup"]');
   const quoteReturn=modal.querySelector('[name="returnDate"]');
   if(quotePickup)quotePickup.value=pickup;
@@ -70,7 +70,11 @@ function openModal(trigger){
     if(Array.from(typeField.options).some(o=>o.value===selectedType||o.textContent===selectedType))
       typeField.value=selectedType;
   }
-  if(noteField&&period)noteField.value="Preferred rental plan: "+period;
+  const estimated=String(trigger?.dataset.estimate||"").trim();
+  if(noteField&&(period||estimated)){
+    noteField.value=(period?"Preferred rental plan: "+period:"")+
+      (estimated?"\nIllustrative estimated total: "+estimated+" (subject to confirmation)":"");
+  }
   document.body.classList.add("sr-quote-open");
   modal.querySelector(".sr-quote-close")?.focus({preventScroll:true});
 }
