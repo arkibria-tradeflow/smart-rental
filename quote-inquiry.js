@@ -13,7 +13,7 @@ function closeModal(){
   document.body.classList.remove("sr-quote-open");
   if(previous?.isConnected)previous.focus({preventScroll:true});
 }
-function openModal(){
+function openModal(trigger){
   if(modal)return;
   if(!phone){window.alert("Please contact the rental team directly for a quotation.");return;}
   returnFocus=document.activeElement;
@@ -57,12 +57,26 @@ function openModal(){
   const quoteReturn=modal.querySelector('[name="returnDate"]');
   if(quotePickup)quotePickup.value=pickup;
   if(quoteReturn)quoteReturn.value=returnDate;
+  // A detail-page quotation uses the exact model and selected rental duration.
+  const model=String(trigger?.dataset.model||"").trim().slice(0,80);
+  const carType=String(trigger?.dataset.carType||"").trim();
+  const period=String(trigger?.dataset.period||"").trim();
+  const modelField=modal.querySelector('[name="model"]');
+  const typeField=modal.querySelector('[name="type"]');
+  const noteField=modal.querySelector('[name="note"]');
+  if(modelField&&model)modelField.value=model;
+  if(typeField&&carType){
+    const selectedType=carType==="Sports"?"Sports / Supercar":carType;
+    if(Array.from(typeField.options).some(o=>o.value===selectedType||o.textContent===selectedType))
+      typeField.value=selectedType;
+  }
+  if(noteField&&period)noteField.value="Preferred rental plan: "+period;
   document.body.classList.add("sr-quote-open");
   modal.querySelector(".sr-quote-close")?.focus({preventScroll:true});
 }
 document.addEventListener("click",function(e){
   const trigger=e.target.closest('[data-action="quote-inquiry"]');
-  if(trigger){e.preventDefault();openModal();return;}
+  if(trigger){e.preventDefault();openModal(trigger);return;}
   if(modal&&e.target.closest("[data-sr-quote-close]")){e.preventDefault();closeModal();}
 });
 document.addEventListener("keydown",function(e){
