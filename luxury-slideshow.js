@@ -1,121 +1,177 @@
-/* Accessible, progressive enhancement for the luxury homepage carousel.
-   Reinitializes after the existing SPA navigates back to Home. */
+/* Hero V4: car photography and customer promises rotate on independent clocks.
+   No slide-to-headline coupling. SPA-safe initialization and reduced-motion support. */
 (function(){
   "use strict";
   const app=document.getElementById("app");
   if(!app)return;
-  const intervalMs=7000;
-  const pauseMs=12000;
+
+  const CAR_INTERVAL=5000;
+  const MESSAGE_INTERVAL=9000;
+  const MANUAL_PAUSE=9000;
   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
-  let mounted=null;
-  function unmount(){
-    if(!mounted)return;
-    window.clearInterval(mounted.interval);
-    mounted=null;
-  }
+  let current=null;
+
   function initialize(){
     const root=app.querySelector("#sr-luxury-slideshow");
-    if(root===mounted?.root)return;
-    unmount();
+    if(current?.root===root)return;
+    if(current){current.destroy();current=null;}
     if(!root)return;
     const slides=Array.from(root.querySelectorAll(".sr-lux-slide"));
-    const dots=Array.from(root.querySelectorAll(".sr-lux-dot"));
+    const thumbs=Array.from(app.querySelectorAll(".sr-hero-thumb"));
     if(slides.length<2)return;
     let messages=[];
-    try{messages=JSON.parse(root.dataset.srMessages||"[]");}catch(e){messages=[];}
-    const messageNode=app.querySelector(".sr-hero-message");
-    const leadNode=app.querySelector("[data-sr-hero-lead]");
-    const accentNode=app.querySelector("[data-sr-hero-accent]");
-    const descriptionNode=app.querySelector("[data-sr-hero-description]");
-    const name=root.querySelector("[data-sr-lux-name]");
+    try{messages=JSON.parse(root.dataset.srMessages||"[]");}catch(e){}
+    const lead=app.querySelector("[data-sr-hero-lead]");
+    const accent=app.querySelector("[data-sr-hero-accent]");
+    const description=app.querySelector("[data-sr-hero-description]");
+    const messagePanel=app.querySelector(".sr-hero-message");
+    const carName=root.querySelector("[data-sr-lux-name]");
     const counter=root.querySelector("[data-sr-lux-count]");
-    const state={root,slides,dots,current:0,pending:0,pausedUntil:0,hovering:false,focused:false,interval:null,startX:null,startY:null};
-    mounted=state;
-    function ensureLoaded(index){
-      const img=slides[index].querySelector("img");
-      if(!img)return Promise.resolve(false);
-      if(img.dataset.src){
-        img.loading="eager";
-        img.src=img.dataset.src;
-        delete img.dataset.src;
+    const hoverArea=app.querySelector(".sr-hero-layout")||root;
+    const timers=[];
+    const state={
+      root,carIndex:0,messageIndex:0,request:0,
+      pauseCarsUntil:0,hovering:false,focused:false,swipeStart:null,
+      destroy(){
+        timers.forEach(id=>window.clearInterval(id));
+        current=null;
       }
-      if(img.complete)return Promise.resolve(img.naturalWidth>0);
-      if(typeof img.decode==="function")return img.decode().then(()=>true,()=>false);
+    };
+    current=state;
+
+    function ensureImage(index){
+      const image=slides[index]?.querySelector("img");
+      if(!image)return Promise.resolve(false);
+      if(image.complete&&image.naturalWidth>0)return Promise.resolve(true);
       return new Promise(resolve=>{
-        img.addEventListener("load",()=>resolve(true),{once:true});
-        img.addEventListener("error",()=>resolve(false),{once:true});
+        let complete=false;
+        const settle=success=>{
+          if(complete)return;
+          complete=true;
+          image.removeEventListener("load",loaded);
+          image.removeEventListener("error",failed);
+          resolve(success);
+        };
+        const loaded=()=>settle(true);
+        const failed=()=>{
+          // If the showcase image isn't installed yet, show catalogue
+          // photography until the six approved creative files are uploaded.
+          if(image.dataset.fallback){
+            const fallback=image.dataset.fallback;
+            delete image.dataset.fallback;
+            image.src=fallback;
+            return;
+          }
+          // The inline image fallback may have already started loading.
+          if(image.currentSrc && image.currentSrc.includes("/assets/") &&
+            !image.currentSrc.includes("/assets/hero/") && !image.complete)return;
+          settle(false);
+        };
+        image.addEventListener("load",loaded);
+        image.addEventListener("error",failed);
+        if(image.dataset.src){
+          image.loading="eager";
+          image.src=image.dataset.src;
+          delete image.dataset.src;
+        }else if(image.complete){
+          settle(image.naturalWidth>0);
+        }
       });
     }
-    function warmNext(index){
-      ensureLoaded((index+1)%slides.length);
-      ensureLoaded((index+2)%slides.length);
+    function preload(index){
+      ensureImage((index+1)%slides.length).catch(()=>{});
     }
-    function show(next,manual){
-      if(manual)state.pausedUntil=Date.now()+pauseMs;
-      const target=(next+slides.length)%slides.length;
-      if(target===state.current)return;
-      const request=++state.pending;
-      ensureLoaded(target).then(ok=>{
-        if(!ok || mounted!==state || request!==state.pending)return;
-        const old=state.current;
+    function changeCar(next,manual=false){
+      const index=(next+slides.length)%slides.length;
+      if(manual)state.pauseCarsUntil=Date.now()+MANUAL_PAUSE;
+      if(index===state.carIndex)return;
+      const token=++state.request;
+      ensureImage(index).then(ready=>{
+        if(!ready||current!==state||token!==state.request)return;
+        const old=state.carIndex;
         slides[old].classList.remove("is-active");
         slides[old].setAttribute("aria-hidden","true");
-        slides[target].classList.add("is-active");
-        slides[target].setAttribute("aria-hidden","false");
-        state.current=target;
-        const msg=messages[Number(slides[target].dataset.srMessage)];
-        if(msg && leadNode && accentNode && descriptionNode){
-          leadNode.textContent=msg.lead;
-          accentNode.textContent=msg.accent;
-          descriptionNode.textContent=msg.detail;
-          const titleElement=leadNode.closest("h1");
-          if(titleElement)titleElement.classList.toggle("sr-hero-long",Number(slides[target].dataset.srMessage)===2);
-          if(messageNode && !reduced.matches){
-            messageNode.classList.remove("sr-message-enter");
-            void messageNode.offsetWidth;
-            messageNode.classList.add("sr-message-enter");
-          }
-        }
-        const img=slides[target].querySelector("img");
-        if(name)name.textContent=img?.alt||"Premium car";
-        if(counter)counter.textContent=String(target+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
-        dots.forEach((dot,i)=>{
-          dot.classList.toggle("is-active",i===target);
-          dot.setAttribute("aria-pressed",String(i===target));
+        slides[index].classList.add("is-active");
+        slides[index].setAttribute("aria-hidden","false");
+        state.carIndex=index;
+        const img=slides[index].querySelector("img");
+        if(carName)carName.textContent=img?.alt||"Featured vehicle";
+        if(counter)counter.textContent=String(index+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
+        thumbs.forEach((thumb,i)=>{
+          thumb.classList.toggle("is-active",i===index);
+          thumb.setAttribute("aria-pressed",String(i===index));
         });
-        warmNext(target);
+        preload(index);
       });
     }
-    root.addEventListener("click",e=>{
+    function changeMessage(next){
+      if(!messages.length||!lead||!accent||!description)return;
+      const index=(next+messages.length)%messages.length;
+      const content=messages[index];
+      state.messageIndex=index;
+      lead.textContent=content.lead;
+      accent.textContent=content.accent;
+      description.textContent=content.detail;
+      const heading=lead.closest("h1");
+      if(heading)heading.classList.toggle("sr-hero-long",index===2);
+      if(messagePanel&&!reduced.matches){
+        messagePanel.classList.remove("sr-message-enter");
+        void messagePanel.offsetWidth;
+        messagePanel.classList.add("sr-message-enter");
+      }
+    }
+    function onRootClick(e){
       const arrow=e.target.closest("[data-sr-step]");
-      if(arrow){show(state.current+Number(arrow.dataset.srStep),true);return;}
-      const dot=e.target.closest("[data-sr-go]");
-      if(dot)show(Number(dot.dataset.srGo),true);
-    });
-    // Pause while visitors are reading the headline as well as while using the car controls.
-    const hoverArea=root.closest(".sr-hero-layout")||root;
-    hoverArea.addEventListener("mouseenter",()=>{state.hovering=true;});
-    hoverArea.addEventListener("mouseleave",()=>{state.hovering=false;});
-    hoverArea.addEventListener("focusin",()=>{state.focused=true;});
-    hoverArea.addEventListener("focusout",e=>{if(!hoverArea.contains(e.relatedTarget))state.focused=false;});
-    root.addEventListener("touchstart",e=>{
-      if(e.touches.length!==1)return;
-      state.startX=e.touches[0].clientX;
-      state.startY=e.touches[0].clientY;
-    },{passive:true});
-    root.addEventListener("touchend",e=>{
-      if(state.startX==null||!e.changedTouches.length)return;
-      const dx=e.changedTouches[0].clientX-state.startX;
-      const dy=e.changedTouches[0].clientY-state.startY;
-      state.startX=null;state.startY=null;
-      if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.35)
-        show(state.current+(dx<0?1:-1),true);
-    },{passive:true});
-    state.interval=window.setInterval(()=>{
-      if(mounted!==state||reduced.matches||document.hidden||state.hovering||state.focused||Date.now()<state.pausedUntil)return;
-      show(state.current+1,false);
-    },intervalMs);
-    warmNext(0);
+      if(arrow){changeCar(state.carIndex+Number(arrow.dataset.srStep),true);}
+    }
+    function onThumbClick(e){
+      const btn=e.target.closest("[data-sr-go]");
+      if(btn && app.contains(btn))changeCar(Number(btn.dataset.srGo),true);
+    }
+    const enter=()=>{state.hovering=true;};
+    const leave=()=>{state.hovering=false;};
+    const focus=()=>{state.focused=true;};
+    const blur=e=>{if(!hoverArea.contains(e.relatedTarget))state.focused=false;};
+    const touchStart=e=>{
+      if(e.touches.length===1)state.swipeStart=[e.touches[0].clientX,e.touches[0].clientY];
+    };
+    const touchEnd=e=>{
+      if(!state.swipeStart||!e.changedTouches.length)return;
+      const dx=e.changedTouches[0].clientX-state.swipeStart[0];
+      const dy=e.changedTouches[0].clientY-state.swipeStart[1];
+      state.swipeStart=null;
+      if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.4)
+        changeCar(state.carIndex+(dx<0?1:-1),true);
+    };
+    root.addEventListener("click",onRootClick);
+    app.addEventListener("click",onThumbClick);
+    hoverArea.addEventListener("mouseenter",enter);
+    hoverArea.addEventListener("mouseleave",leave);
+    hoverArea.addEventListener("focusin",focus);
+    hoverArea.addEventListener("focusout",blur);
+    root.addEventListener("touchstart",touchStart,{passive:true});
+    root.addEventListener("touchend",touchEnd,{passive:true});
+    // Remove listeners before a replacement SPA render to avoid accumulation.
+    state.destroy=()=>{
+      timers.forEach(id=>window.clearInterval(id));
+      root.removeEventListener("click",onRootClick);
+      app.removeEventListener("click",onThumbClick);
+      hoverArea.removeEventListener("mouseenter",enter);
+      hoverArea.removeEventListener("mouseleave",leave);
+      hoverArea.removeEventListener("focusin",focus);
+      hoverArea.removeEventListener("focusout",blur);
+      root.removeEventListener("touchstart",touchStart);
+      root.removeEventListener("touchend",touchEnd);
+    };
+    timers.push(window.setInterval(()=>{
+      if(current!==state||reduced.matches||document.hidden||state.hovering||state.focused||Date.now()<state.pauseCarsUntil)return;
+      changeCar(state.carIndex+1);
+    },CAR_INTERVAL));
+    timers.push(window.setInterval(()=>{
+      if(current!==state||reduced.matches||document.hidden||state.hovering||state.focused)return;
+      changeMessage(state.messageIndex+1);
+    },MESSAGE_INTERVAL));
+    preload(0);
   }
   const observer=new MutationObserver(initialize);
   observer.observe(app,{childList:true});
