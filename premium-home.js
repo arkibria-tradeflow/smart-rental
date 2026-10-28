@@ -40,14 +40,6 @@ function luxuryHero(){
     "</div>"+
   "</div>";
 }
-function heroThumbnails(){
-  return "<div class='container sr-hero-showcase'><div class='sr-hero-thumbnails' aria-label='Choose a featured vehicle'>"+
-    showcaseCars.map((car,i)=>
-      "<button type='button' class='sr-hero-thumb"+(i===0?" is-active":"")+"' data-sr-go='"+i+"' aria-label='Show "+esc(car[1])+"' aria-pressed='"+(i===0?"true":"false")+"'>"+
-      "<img src='assets/hero/"+car[0]+".webp' alt='' loading='lazy' data-fallback='assets/"+car[0]+".webp' onerror=\"if(this.dataset.fallback){this.src=this.dataset.fallback;delete this.dataset.fallback;}\">"+
-      "<span>"+esc(car[1])+"</span></button>"
-    ).join("")+"</div><p class='sr-hero-visual-note'>AI-generated showcase visuals · Specific vehicles and availability confirmed on enquiry</p></div>";
-}
 const cats=[["Economy","Economy","nissan-sunny"],["Sedan","Sedans","hyundai-sonata"],["SUV","SUVs","toyota-fortuner"],["Luxury","Luxury","mercedes-s-class"],["Sports","Supercars","ferrari-f8"]];
 const brands=[["Toyota","toyota-corolla"],["Hyundai","hyundai-sonata"],["Nissan","nissan-patrol-new"],["Mercedes","mercedes-c200"],["BMW","bmw-5-series"],["Range Rover","range-rover-velar"],["Audi","audi-a6"],["Lamborghini","lamborghini-huracan"]];
 const mapURL=CFG.googleMapsUrl||"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(CFG.businessName+" "+CFG.city);
@@ -81,7 +73,7 @@ return "<main class='sr-home'>"+
 "<div class='sr-hero-message'><h1 data-sr-hero-title><span data-sr-hero-lead>"+esc(heroMessages[0].lead)+"</span> <em data-sr-hero-accent>"+esc(heroMessages[0].accent)+"</em></h1><p data-sr-hero-description>"+esc(heroMessages[0].detail)+"</p></div>"+
 "<div class='sr-hero-actions'><button class='sr-button-dark' type='button' data-action='browse'>Explore Cars "+icon("arrow",17)+"</button>"+
 "<a class='sr-button-link' href='https://wa.me/"+PHONE+"' target='_blank' rel='noopener noreferrer'>"+icon("message",17)+" Chat on WhatsApp</a></div>"+"<div class='sr-hero-proof'><span>"+icon("car",18)+" Explore our fleet</span><span>"+icon("calendar",18)+" Flexible rental enquiries</span><span>"+icon("pin",18)+" Dubai, UAE</span></div></div>"+
-"<div class='sr-hero-media'><div class='sr-hero-glow'></div>"+luxuryHero()+"</div></div>"+heroThumbnails()+
+"<div class='sr-hero-media'><div class='sr-hero-glow'></div>"+luxuryHero()+"</div></div>"+
 "<div class='container sr-search-holder'><div class='sr-search-label'><span>FIND YOUR NEXT DRIVE</span><strong>Pick your dates and car style</strong></div>"+searchFields()+"</div></section>"+
 "<div class='container sr-trust-row'><span>"+icon("calendar",19)+" Daily · Weekly · Monthly</span><span>"+icon("car",19)+" Economy to luxury</span><span>"+icon("pin",19)+" Based in Deira, Dubai</span></div>"+
 "<section class='sr-section sr-categories' id='categories'><div class='container'><div class='sr-section-heading'><div><span class='sr-overline'>THE COLLECTION</span><h2>Explore by category</h2><p>Something for every kind of drive.</p></div><a class='sr-inline-link' href='#fleet'>View all cars "+icon("arrow",17)+"</a></div><div class='sr-category-grid'>"+categoryCards+"</div></div></section>"+
